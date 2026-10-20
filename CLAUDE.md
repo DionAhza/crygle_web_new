@@ -15,7 +15,7 @@ Tugasmu adalah menulis kode yang bersih, modular, aman, bebas dari *N+1 Query Pr
 ---
 
 ## 2. Tech Stack & Packages yang Sudah Terinstal
-Asumsikan seluruh package berikut **SUDAH TERINSTAL** di dalam proyek. Langsung gunakan class/fiturnya saat menulis kode:
+Asumsikan seluruh package berikut **SUDAH TERINSTAL** di dalam proyek:
 
 ### Backend (Composer):
 - **Core:** Laravel 11 + Laravel Breeze (Blade Stack)
@@ -77,26 +77,15 @@ Selalu patuhi penamaan tabel dan kolom berikut saat menulis Migration, Model, ma
 ## 5. Standar Penulisan Kode (Coding Guidelines)
 - **Laravel 11 Structure:** Ingat bahwa di Laravel 11 tidak ada `app/Http/Kernel.php`. Pendaftaran middleware alias dilakukan di `bootstrap/app.php`.
 - **Query Optimization:** Selalu gunakan *Eager Loading* (`with(['modules.lessons', 'mentor'])`) untuk mencegah *N+1 Query*.
-- **Security & Authorization:** Gunakan Middleware Spatie (`role:mentor`, `role:student`, `role:admin`) pada `routes/web.php`, serta pastikan mentor hanya bisa mengedit kelas dan menilai tugas dari kelas miliknya sendiri (gunakan Laravel Policy atau validasi `mentor_id === auth()->id()`).
-- **Blade & UI:** Buat tampilan modern, bersih, dan responsif menggunakan Tailwind CSS dengan skema warna profesional (misal: Indigo/Slate). Gunakan komponen Blade (`resources/views/components/`) agar tidak duplikasi kode.
-- **Format Output Kode:** Setiap kali memberikan kode, **tuliskan path file secara lengkap** di atas blok kode (contoh: `// File: app/Models/Course.php`) dan berikan kode yang utuh (jangan dipotong dengan komentar `// ... kode lainnya ...` pada bagian yang krusial).
+- **Security & Authorization:** Gunakan Middleware Spatie (`role:mentor`, `role:student`, `role:admin`) pada `routes/web.php`, serta pastikan mentor hanya bisa mengedit kelas dan menilai tugas dari kelas miliknya sendiri.
+- **Blade & UI:** Buat tampilan modern dan responsif menggunakan Tailwind CSS dengan skema warna profesional (misal: Indigo/Slate).
 
 ---
 
 ## 6. Roadmap & Status Pengerjaan Saat Ini (Project Tracker)
-*(Catatan untuk User: Ubah tanda `[ ]` menjadi `[x]` setiap kali sebuah fase selesai dikerjakan bersama Claude agar akun Claude berikutnya tahu posisi terakhir)*
-
 - [ ] **Fase 1: Fondasi Database, Model & Seeder**
-  - Pembuatan Migration 8 tabel utama + konfigurasi Spatie Permission.
-  - Pembuatan Model lengkap dengan relasi Eloquent & helper method.
-  - Pembuatan `DatabaseSeeder` (Akun Admin, Mentor, Student + 1 Kelas + Modul + Video Lesson + Assignment + Contoh Submission).
 - [ ] **Fase 2: Dashboard Mentor (Manajemen Kelas, Video & Tugas)**
-  - CRUD Course, Module, Lesson (input link video), dan Assignment oleh Mentor.
 - [ ] **Fase 3: Katalog Kelas, Detail Silabus & Enrollment Siswa**
-  - Landing page, katalog kelas, detail kelas, dan proses pendaftaran/checkout Midtrans.
 - [ ] **Fase 4: Ruang Belajar (Course Player) & Sequential Locking**
-  - Halaman belajar dengan Plyr video player, sidebar daftar bab, dan logika penguncian materi berurutan.
 - [ ] **Fase 5: Sistem Pengumpulan Tugas (Submission) & Review Mentor**
-  - Form upload tugas siswa, histori revisi, dan halaman antrean penilaian (*Submission Queue*) untuk Mentor.
 - [ ] **Fase 6: Sertifikat PDF Otomatis & Finalisasi**
-  - Generate sertifikat PDF (`dompdf`) saat progres 100% dan halaman verifikasi kode sertifikat.
