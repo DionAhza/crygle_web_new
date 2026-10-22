@@ -12,6 +12,15 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                // Warna merek halaman auth (diambil dari desain login/register).
+                brand: {
+                    DEFAULT: '#235f9c',
+                    dark: '#1b4d82',
+                    50: '#f1f6fc',
+                    border: '#8fb0d3',
+                },
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },

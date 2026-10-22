@@ -77,7 +77,7 @@ class CatalogAndEnrollmentTest extends TestCase
     {
         $this->post('/register', [
             'name' => 'Siswa Baru', 'email' => 'baru@example.com',
-            'password' => 'password-123', 'password_confirmation' => 'password-123',
+            'password' => 'password-123', 'password_confirmation' => 'password-123', 'terms' => '1',
         ]);
 
         $this->assertTrue(User::where('email', 'baru@example.com')->first()->hasRole('student'));
