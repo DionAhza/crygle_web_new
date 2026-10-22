@@ -9,6 +9,7 @@ use App\Http\Controllers\Mentor\LessonController;
 use App\Http\Controllers\Mentor\ModuleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Student\LearnController;
 use App\Http\Controllers\Student\EnrollmentController as StudentEnrollmentController;
 use App\Http\Controllers\Student\MyCoursesController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,14 @@ Route::get('/dashboard', function () {
 
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// ---------------------------------------------------------------- Ruang belajar
+// Akses diatur di controller: siswa terdaftar (berurutan), preview gratis, atau mentor pemilik.
+Route::middleware(['auth', 'verified'])->prefix('belajar')->name('learn.')->group(function () {
+    Route::get('{course}', [LearnController::class, 'index'])->name('index');
+    Route::get('{course}/materi/{lesson}', [LearnController::class, 'show'])->name('show');
+    Route::post('{course}/materi/{lesson}/selesai', [LearnController::class, 'complete'])->name('complete');
+});
 
 // ---------------------------------------------------------------- Siswa
 Route::middleware(['auth', 'verified', 'role:student'])->name('student.')->group(function () {

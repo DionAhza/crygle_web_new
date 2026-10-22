@@ -46,6 +46,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-3 text-xs">
+                                    <a href="{{ route('learn.show', [$course, $lesson]) }}" class="text-slate-500 hover:underline">Pratinjau</a>
                                     <a href="{{ route('mentor.lessons.edit', $lesson) }}" class="text-indigo-600 hover:underline">Edit</a>
                                     @if ($lesson->assignment)
                                         <a href="{{ route('mentor.assignments.edit', $lesson->assignment) }}" class="text-indigo-600 hover:underline">Edit tugas</a>

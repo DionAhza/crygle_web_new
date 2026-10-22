@@ -45,7 +45,7 @@
                                     <div class="mb-1 flex justify-between text-xs text-slate-500"><span>Progres</span><span>{{ $enrollment->progress_percent }}%</span></div>
                                     <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-indigo-600" style="width: {{ $enrollment->progress_percent }}%"></div></div>
                                 </div>
-                                <a href="{{ route('catalog.show', $enrollment->course) }}" class="mt-4 rounded-lg border border-slate-200 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">Lihat Kelas</a>
+                                <a href="{{ route('learn.index', $enrollment->course) }}" class="mt-4 rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-700">{{ $enrollment->isCompleted() ? 'Tinjau Kelas' : ($enrollment->progress_percent > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar') }}</a>
                             </div>
                         </div>
                     @empty

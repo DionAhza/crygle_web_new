@@ -30,7 +30,7 @@
                             @foreach ($module->lessons as $lesson)
                                 <li class="flex items-center justify-between gap-3 px-5 py-3 text-sm">
                                     <span class="text-slate-700">{{ $lesson->title }}
-                                        @if ($lesson->is_free_preview)<span class="ms-1 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">Preview</span>@endif
+                                        @if ($lesson->is_free_preview)<a href="{{ route('learn.show', [$course, $lesson]) }}" class="ms-1 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700 hover:bg-emerald-200">Preview</a>@endif
                                     </span>
                                     <span class="shrink-0 text-xs text-slate-400">{{ Format::duration($lesson->duration_seconds) }}</span>
                                 </li>
@@ -59,7 +59,7 @@
                     @else
                         @if (auth()->user()->hasRole('student'))
                             @if ($enrollment?->isPaid())
-                                <a href="{{ route('student.courses') }}" class="block rounded-full bg-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-emerald-700">Anda Sudah Terdaftar</a>
+                                <a href="{{ route('learn.index', $course) }}" class="block rounded-full bg-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-emerald-700">{{ $enrollment->progress_percent > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar' }}</a>
                             @elseif ($enrollment)
                                 <a href="{{ route('student.checkout', $enrollment) }}" class="block rounded-full bg-amber-500 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-amber-600">Selesaikan Pembayaran</a>
                             @elseif ($course->is_published)
