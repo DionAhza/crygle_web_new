@@ -16,10 +16,17 @@
         </ul>
 
         {{-- CTA desktop --}}
-        <a href="/register"
-           class="hidden rounded-full bg-blue-800 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-900 lg:inline-flex">
-            Daftar Sekarang
+        <div>
+
+            <a href="/login"
+            class="hidden rounded-full  px-5 py-2 text-sm font-semibold text-blue-800 transition hover:text-blue-500 lg:inline-flex">
+            Masuk
         </a>
+        <a href="/register"
+        class="hidden rounded-full bg-blue-800 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-900 lg:inline-flex">
+        Daftar Sekarang
+    </a>
+</div>
 
         {{-- Tombol hamburger (mobile) --}}
         <button id="nav-toggle" type="button" aria-label="Buka menu" aria-expanded="false"

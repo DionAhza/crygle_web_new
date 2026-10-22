@@ -15,6 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @role('mentor')
+                        <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
+                            Dashboard Mentor
+                        </x-nav-link>
+                        <x-nav-link :href="route('mentor.courses.index')" :active="request()->routeIs('mentor.courses.*', 'mentor.lessons.*', 'mentor.assignments.*')">
+                            Kelas Saya
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -70,6 +78,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @role('mentor')
+                <x-responsive-nav-link :href="route('mentor.courses.index')" :active="request()->routeIs('mentor.courses.*')">
+                    Kelas Saya
+                </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

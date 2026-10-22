@@ -84,7 +84,7 @@ Selalu patuhi penamaan tabel dan kolom berikut saat menulis Migration, Model, ma
 
 ## 6. Roadmap & Status Pengerjaan Saat Ini (Project Tracker)
 - [x] **Fase 1: Fondasi Database, Model & Seeder**
-- [ ] **Fase 2: Dashboard Mentor (Manajemen Kelas, Video & Tugas)**
+- [x] **Fase 2: Dashboard Mentor (Manajemen Kelas, Video & Tugas)**
 - [ ] **Fase 3: Katalog Kelas, Detail Silabus & Enrollment Siswa**
 - [ ] **Fase 4: Ruang Belajar (Course Player) & Sequential Locking**
 - [ ] **Fase 5: Sistem Pengumpulan Tugas (Submission) & Review Mentor**
