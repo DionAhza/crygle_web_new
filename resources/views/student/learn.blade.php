@@ -28,6 +28,16 @@
             <div class="min-w-0 space-y-6">
                 <x-flash />
 
+                @if ($mode === 'student' && $enrollment->certificate_code)
+                    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                        <div>
+                            <div class="font-semibold text-emerald-800">🎓 Selamat, Anda telah menyelesaikan kelas ini!</div>
+                            <div class="text-xs text-emerald-700">Sertifikat Anda sudah siap diunduh.</div>
+                        </div>
+                        <a href="{{ route('certificates.download', $enrollment) }}" class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">Unduh Sertifikat (PDF)</a>
+                    </div>
+                @endif
+
                 @if ($video && $video['provider'] === 'file')
                     <div class="overflow-hidden rounded-xl bg-black">
                         <video id="lesson-player" playsinline controls>

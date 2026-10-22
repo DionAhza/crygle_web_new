@@ -1,17 +1,18 @@
 <?php
 
 use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\MidtransNotificationController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\Mentor\AssignmentController;
 use App\Http\Controllers\Mentor\CourseController as MentorCourseController;
 use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
 use App\Http\Controllers\Mentor\LessonController;
 use App\Http\Controllers\Mentor\ModuleController;
 use App\Http\Controllers\Mentor\SubmissionController as MentorSubmissionController;
+use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CheckoutController;
-use App\Http\Controllers\Student\LearnController;
 use App\Http\Controllers\Student\EnrollmentController as StudentEnrollmentController;
+use App\Http\Controllers\Student\LearnController;
 use App\Http\Controllers\Student\MyCoursesController;
 use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
 use App\Http\Controllers\SubmissionDownloadController;
@@ -24,6 +25,13 @@ Route::get('/', function () {
 // ---------------------------------------------------------------- Katalog (publik)
 Route::get('/kelas', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/kelas/{course}', [CatalogController::class, 'show'])->name('catalog.show');
+
+// ---------------------------------------------------------------- Sertifikat
+// Verifikasi keaslian terbuka untuk umum (dibatasi lajunya); unduh PDF hanya untuk siswa pemilik (EnrollmentPolicy).
+Route::get('/sertifikat/verifikasi/{code}', [CertificateController::class, 'verify'])
+    ->where('code', '[A-Za-z0-9\-]+')->middleware('throttle:30,1')->name('certificates.verify');
+Route::get('/sertifikat/{enrollment}/unduh', [CertificateController::class, 'download'])
+    ->middleware(['auth', 'verified'])->name('certificates.download');
 
 // Webhook Midtrans (tanpa auth, tanpa CSRF; diverifikasi lewat signature)
 Route::post('/midtrans/notification', MidtransNotificationController::class)->name('midtrans.notification');

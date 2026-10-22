@@ -45,6 +45,13 @@
                                     <div class="mb-1 flex justify-between text-xs text-slate-500"><span>Progres</span><span>{{ $enrollment->progress_percent }}%</span></div>
                                     <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-indigo-600" style="width: {{ $enrollment->progress_percent }}%"></div></div>
                                 </div>
+                                @if ($enrollment->certificate_code)
+                                    <div class="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-center">
+                                        <div class="text-xs font-semibold text-emerald-700">🎓 Kelas selesai</div>
+                                        <a href="{{ route('certificates.download', $enrollment) }}" class="mt-2 block rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700">Unduh Sertifikat (PDF)</a>
+                                        <a href="{{ route('certificates.verify', $enrollment->certificate_code) }}" class="mt-2 block text-xs font-medium text-emerald-700 hover:underline">Lihat halaman verifikasi</a>
+                                    </div>
+                                @endif
                                 <a href="{{ route('learn.index', $enrollment->course) }}" class="mt-4 rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-700">{{ $enrollment->isCompleted() ? 'Tinjau Kelas' : ($enrollment->progress_percent > 0 ? 'Lanjutkan Belajar' : 'Mulai Belajar') }}</a>
                             </div>
                         </div>
