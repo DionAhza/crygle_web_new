@@ -37,6 +37,7 @@ Asumsikan seluruh package berikut **SUDAH TERINSTAL** di dalam proyek:
 - `CRYGLE_CERTIFICATE_PREFIX="CRYGLE-CERT-"`
 - `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `MIDTRANS_IS_PRODUCTION`
 - `VIDEO_STORAGE_DRIVER=youtube`
+- `SUBMISSION_DISK=local` (gunakan `s3` di produksi) dan `SUBMISSION_MAX_KB=10240` untuk berkas tugas siswa
 
 ---
 
@@ -87,5 +88,5 @@ Selalu patuhi penamaan tabel dan kolom berikut saat menulis Migration, Model, ma
 - [x] **Fase 2: Dashboard Mentor (Manajemen Kelas, Video & Tugas)**
 - [x] **Fase 3: Katalog Kelas, Detail Silabus & Enrollment Siswa**
 - [x] **Fase 4: Ruang Belajar (Course Player) & Sequential Locking**
-- [ ] **Fase 5: Sistem Pengumpulan Tugas (Submission) & Review Mentor**
+- [x] **Fase 5: Sistem Pengumpulan Tugas (Submission) & Review Mentor**
 - [ ] **Fase 6: Sertifikat PDF Otomatis & Finalisasi**

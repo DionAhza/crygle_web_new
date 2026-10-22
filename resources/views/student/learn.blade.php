@@ -56,12 +56,9 @@
                             <div class="prose prose-sm prose-slate mt-4 max-w-none">{!! $instructionsHtml !!}</div>
                         @endif
                         @if ($mode === 'student')
-                            @if ($isCompleted)
-                                <p class="mt-4 text-sm font-semibold text-emerald-700">✓ Tugas telah disetujui.</p>
-                            @else
-                                {{-- Pengumpulan tugas dibangun di Fase 5 --}}
-                                <p class="mt-4 rounded-lg bg-white p-3 text-sm text-slate-500">Formulir pengumpulan tugas akan tersedia pada pembaruan berikutnya.</p>
-                            @endif
+                            @include('student.partials.submission-panel')
+                        @elseif ($mode === 'owner')
+                            <p class="mt-4 rounded-lg bg-white p-3 text-sm text-slate-500">Pengiriman siswa untuk tugas ini dinilai di menu <a href="{{ route('mentor.submissions.index') }}" class="font-semibold text-indigo-600 hover:underline">Review Tugas</a>.</p>
                         @endif
                     </section>
                 @endif

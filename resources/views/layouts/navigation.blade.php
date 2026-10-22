@@ -30,6 +30,9 @@
                         <x-nav-link :href="route('mentor.courses.index')" :active="request()->routeIs('mentor.courses.*', 'mentor.lessons.*', 'mentor.assignments.*')">
                             Kelas Saya
                         </x-nav-link>
+                        <x-nav-link :href="route('mentor.submissions.index')" :active="request()->routeIs('mentor.submissions.*')">
+                            Review Tugas
+                        </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -97,6 +100,9 @@
             @role('mentor')
                 <x-responsive-nav-link :href="route('mentor.courses.index')" :active="request()->routeIs('mentor.courses.*')">
                     Kelas Saya
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('mentor.submissions.index')" :active="request()->routeIs('mentor.submissions.*')">
+                    Review Tugas
                 </x-responsive-nav-link>
             @endrole
         </div>

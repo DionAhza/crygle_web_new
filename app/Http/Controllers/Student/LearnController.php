@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Lesson;
 use App\Services\CourseProgressService;
+use App\Services\SubmissionService;
 use App\Support\VideoEmbed;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,10 @@ use Illuminate\View\View;
 
 class LearnController extends Controller
 {
-    public function __construct(private CourseProgressService $progress) {}
+    public function __construct(
+        private CourseProgressService $progress,
+        private SubmissionService $submissions,
+    ) {}
 
     /** Mengarahkan ke materi yang harus dikerjakan berikutnya. */
     public function index(Request $request, Course $course): RedirectResponse
@@ -75,6 +79,12 @@ class LearnController extends Controller
 
         $lesson->loadMissing('assignment');
 
+        // Riwayat pengiriman tugas (terbaru dulu) hanya relevan untuk siswa terdaftar.
+        $submissions = collect();
+        if ($mode === 'student' && $lesson->assignment) {
+            $submissions = $this->submissions->historyFor($lesson->assignment, $user);
+        }
+
         return view('student.learn', [
             'course' => $course,
             'lesson' => $lesson,
@@ -90,6 +100,9 @@ class LearnController extends Controller
             'next' => $next && ($mode !== 'preview') && ($mode === 'owner' || $isCompleted) ? $next : null,
             'isCompleted' => $isCompleted,
             'canComplete' => $mode === 'student' && ! $isCompleted && ! $lesson->assignment,
+            'submissions' => $submissions,
+            'canSubmit' => $mode === 'student' && ! $isCompleted && $lesson->assignment
+                && $this->submissions->canSubmit($submissions->first()),
             'position' => ['current' => $index + 1, 'total' => $lessons->count()],
         ]);
     }

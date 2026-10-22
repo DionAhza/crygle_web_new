@@ -8,11 +8,18 @@
             <x-flash />
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 sm:px-0">
-                @foreach ([['Total Kelas', $stats['courses']], ['Kelas Terbit', $stats['published']], ['Total Siswa', $stats['students']], ['Tugas Menunggu Review', $stats['pending']]] as [$label, $value])
-                    <div class="rounded-xl bg-white p-5 shadow-sm border border-slate-100">
-                        <div class="text-sm text-slate-500">{{ $label }}</div>
-                        <div class="mt-1 text-3xl font-bold text-indigo-700">{{ $value }}</div>
-                    </div>
+                @foreach ([['Total Kelas', $stats['courses'], null], ['Kelas Terbit', $stats['published'], null], ['Total Siswa', $stats['students'], null], ['Tugas Menunggu Review', $stats['pending'], route('mentor.submissions.index')]] as [$label, $value, $href])
+                    @if ($href)
+                        <a href="{{ $href }}" class="rounded-xl bg-white p-5 shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow">
+                            <div class="text-sm text-slate-500">{{ $label }}</div>
+                            <div class="mt-1 text-3xl font-bold text-indigo-700">{{ $value }}</div>
+                        </a>
+                    @else
+                        <div class="rounded-xl bg-white p-5 shadow-sm border border-slate-100">
+                            <div class="text-sm text-slate-500">{{ $label }}</div>
+                            <div class="mt-1 text-3xl font-bold text-indigo-700">{{ $value }}</div>
+                        </div>
+                    @endif
                 @endforeach
             </div>
 

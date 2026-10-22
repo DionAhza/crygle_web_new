@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,8 +36,24 @@ class Submission extends Model
         return $this->belongsTo(User::class, 'reviewer_id');
     }
 
+    /** Pengiriman pada kelas milik mentor tertentu. */
+    public function scopeForMentor(Builder $query, User $mentor): Builder
+    {
+        return $query->whereHas('assignment.lesson.module.course', fn ($q) => $q->where('mentor_id', $mentor->id));
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
     public function isApproved(): bool
     {
         return $this->status === 'approved';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
     }
 }

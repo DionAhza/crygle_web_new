@@ -7,7 +7,9 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Lesson;
 use App\Models\Module;
+use App\Models\Submission;
 use App\Models\User;
+use App\Services\CourseProgressService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -86,10 +88,29 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Enrollment::create([
+        $demoCourse = Course::where('slug', Str::slug($catalog[0][0]))->firstOrFail();
+
+        $enrollment = Enrollment::create([
             'student_id' => $student->id,
-            'course_id' => Course::where('slug', Str::slug($catalog[0][0]))->value('id'),
+            'course_id' => $demoCourse->id,
             'payment_status' => 'paid',
+        ]);
+
+        // Contoh alur Fase 5: siswa demo sudah menyelesaikan 2 materi pertama dan
+        // mengirim tugas pada materi ke-3, sehingga langsung muncul di antrean review mentor.
+        $progress = app(CourseProgressService::class);
+        $lessons = $progress->orderedLessons($demoCourse);
+
+        foreach ($lessons->take(2) as $lesson) {
+            $progress->markCompleted($student, $lesson, $enrollment);
+        }
+
+        Submission::create([
+            'assignment_id' => $lessons[2]->assignment->id,
+            'student_id' => $student->id,
+            'attachment_url' => 'https://github.com/siswa-demo/laravel-routing',
+            'student_note' => 'Ini hasil latihan routing saya, mohon dicek ya Kak.',
+            'status' => 'pending',
         ]);
     }
 }

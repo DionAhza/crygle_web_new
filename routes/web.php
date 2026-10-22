@@ -7,11 +7,14 @@ use App\Http\Controllers\Mentor\CourseController as MentorCourseController;
 use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
 use App\Http\Controllers\Mentor\LessonController;
 use App\Http\Controllers\Mentor\ModuleController;
+use App\Http\Controllers\Mentor\SubmissionController as MentorSubmissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Student\LearnController;
 use App\Http\Controllers\Student\EnrollmentController as StudentEnrollmentController;
 use App\Http\Controllers\Student\MyCoursesController;
+use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
+use App\Http\Controllers\SubmissionDownloadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,12 +48,17 @@ Route::middleware(['auth', 'verified'])->prefix('belajar')->name('learn.')->grou
     Route::post('{course}/materi/{lesson}/selesai', [LearnController::class, 'complete'])->name('complete');
 });
 
+// Unduh berkas tugas: otorisasi (siswa pemilik / mentor pemilik kelas) dicek lewat SubmissionPolicy.
+Route::get('/tugas/{submission}/unduh', SubmissionDownloadController::class)
+    ->middleware(['auth', 'verified'])->name('submissions.download');
+
 // ---------------------------------------------------------------- Siswa
 Route::middleware(['auth', 'verified', 'role:student'])->name('student.')->group(function () {
     Route::get('/kelas-saya', MyCoursesController::class)->name('courses');
     Route::post('/kelas/{course}/daftar', [StudentEnrollmentController::class, 'store'])->name('enroll');
     Route::get('/checkout/{enrollment}', [CheckoutController::class, 'show'])->name('checkout');
     Route::post('/checkout/{enrollment}/simulate', [CheckoutController::class, 'simulate'])->name('checkout.simulate');
+    Route::post('/belajar/{course}/materi/{lesson}/tugas', [StudentSubmissionController::class, 'store'])->name('submissions.store');
 });
 
 // ---------------------------------------------------------------- Mentor
@@ -74,6 +82,10 @@ Route::middleware(['auth', 'verified', 'role:mentor'])
         Route::get('assignments/{assignment}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
         Route::put('assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
         Route::delete('assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+
+        Route::get('submissions', [MentorSubmissionController::class, 'index'])->name('submissions.index');
+        Route::get('submissions/{submission}', [MentorSubmissionController::class, 'show'])->name('submissions.show');
+        Route::patch('submissions/{submission}', [MentorSubmissionController::class, 'review'])->name('submissions.review');
     });
 
 Route::middleware('auth')->group(function () {
