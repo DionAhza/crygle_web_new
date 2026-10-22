@@ -1,24 +1,48 @@
 <?php
 
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\Mentor\AssignmentController;
 use App\Http\Controllers\Mentor\CourseController as MentorCourseController;
 use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
 use App\Http\Controllers\Mentor\LessonController;
 use App\Http\Controllers\Mentor\ModuleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Student\EnrollmentController as StudentEnrollmentController;
+use App\Http\Controllers\Student\MyCoursesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// ---------------------------------------------------------------- Katalog (publik)
+Route::get('/kelas', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/kelas/{course}', [CatalogController::class, 'show'])->name('catalog.show');
+
+// Webhook Midtrans (tanpa auth, tanpa CSRF; diverifikasi lewat signature)
+Route::post('/midtrans/notification', MidtransNotificationController::class)->name('midtrans.notification');
+
 Route::get('/dashboard', function () {
     if (auth()->user()->hasRole('mentor')) {
         return redirect()->route('mentor.dashboard');
     }
 
+    if (auth()->user()->hasRole('student')) {
+        return redirect()->route('student.courses');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// ---------------------------------------------------------------- Siswa
+Route::middleware(['auth', 'verified', 'role:student'])->name('student.')->group(function () {
+    Route::get('/kelas-saya', MyCoursesController::class)->name('courses');
+    Route::post('/kelas/{course}/daftar', [StudentEnrollmentController::class, 'store'])->name('enroll');
+    Route::get('/checkout/{enrollment}', [CheckoutController::class, 'show'])->name('checkout');
+    Route::post('/checkout/{enrollment}/simulate', [CheckoutController::class, 'simulate'])->name('checkout.simulate');
+});
 
 // ---------------------------------------------------------------- Mentor
 Route::middleware(['auth', 'verified', 'role:mentor'])

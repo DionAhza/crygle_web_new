@@ -15,6 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.*')">
+                        Katalog
+                    </x-nav-link>
+                    @role('student')
+                        <x-nav-link :href="route('student.courses')" :active="request()->routeIs('student.*')">
+                            Kelas Saya
+                        </x-nav-link>
+                    @endrole
                     @role('mentor')
                         <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
                             Dashboard Mentor
@@ -78,6 +86,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.*')">
+                Katalog
+            </x-responsive-nav-link>
+            @role('student')
+                <x-responsive-nav-link :href="route('student.courses')" :active="request()->routeIs('student.*')">
+                    Kelas Saya
+                </x-responsive-nav-link>
+            @endrole
             @role('mentor')
                 <x-responsive-nav-link :href="route('mentor.courses.index')" :active="request()->routeIs('mentor.courses.*')">
                     Kelas Saya
