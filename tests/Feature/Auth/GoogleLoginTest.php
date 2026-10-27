@@ -34,13 +34,14 @@ class GoogleLoginTest extends TestCase
         Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
     }
 
-    public function test_button_is_active_only_when_configured(): void
+    public function test_button_is_always_clickable_and_explains_missing_config(): void
     {
         $this->get('/login')->assertOk()->assertSee(route('auth.google'), false)->assertDontSee('Segera');
 
         config(['services.google.client_id' => null]);
-        $this->get('/login')->assertOk()->assertDontSee(route('auth.google'), false)->assertSee('Segera');
-        $this->get(route('auth.google'))->assertRedirect(route('login'))->assertSessionHasErrors('email');
+        $this->get('/login')->assertOk()->assertSee(route('auth.google'), false);
+        $this->get(route('auth.google'))->assertRedirect(route('login'))
+            ->assertSessionHasErrors(['email' => 'Login dengan Google belum dikonfigurasi: GOOGLE_CLIENT_ID belum terbaca. Pastikan sudah diisi di file .env (bukan .env.example), lalu jalankan "php artisan config:clear".']);
     }
 
     public function test_redirect_goes_to_google(): void

@@ -80,4 +80,18 @@ class ManualRegistrationVerificationTest extends TestCase
         $this->post(route('verification.send'))->assertRedirect()->assertSessionHas('status', 'verification-link-sent');
         Notification::assertSentTo($user, VerifyEmail::class);
     }
+
+    public function test_verify_page_shows_dev_link_only_for_local_log_mailer(): void
+    {
+        $user = $this->register();
+
+        config(['mail.default' => 'log']);
+        $this->app['env'] = 'local';
+        $this->get(route('verification.notice'))->assertOk()
+            ->assertSee('Mode pengembangan')->assertSee('verify-email/'.$user->id, false);
+
+        config(['mail.default' => 'smtp']);
+        $this->get(route('verification.notice'))->assertOk()
+            ->assertDontSee('Mode pengembangan')->assertSee($user->email);
+    }
 }

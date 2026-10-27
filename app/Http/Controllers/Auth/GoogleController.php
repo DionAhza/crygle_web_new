@@ -16,8 +16,8 @@ class GoogleController extends Controller
     /** Mengarahkan pengguna ke halaman persetujuan Google. */
     public function redirect(): RedirectResponse
     {
-        if (! $this->configured()) {
-            return redirect()->route('login')->withErrors(['email' => 'Login dengan Google belum dikonfigurasi.']);
+        if ($missing = $this->missingConfig()) {
+            return redirect()->route('login')->withErrors(['email' => $missing]);
         }
 
         return Socialite::driver('google')->redirect();
@@ -26,8 +26,8 @@ class GoogleController extends Controller
     /** Menerima hasil login dari Google, lalu menautkan atau membuat akun. */
     public function callback(): RedirectResponse
     {
-        if (! $this->configured()) {
-            return redirect()->route('login')->withErrors(['email' => 'Login dengan Google belum dikonfigurasi.']);
+        if ($missing = $this->missingConfig()) {
+            return redirect()->route('login')->withErrors(['email' => $missing]);
         }
 
         try {
@@ -35,7 +35,12 @@ class GoogleController extends Controller
         } catch (Throwable $e) {
             report($e);
 
-            return redirect()->route('login')->withErrors(['email' => 'Login dengan Google dibatalkan atau gagal. Silakan coba lagi.']);
+            $message = 'Login dengan Google dibatalkan atau gagal. Silakan coba lagi.';
+            if (config('app.debug')) {
+                $message .= ' (Detail: '.class_basename($e).' — '.Str::limit($e->getMessage(), 200).')';
+            }
+
+            return redirect()->route('login')->withErrors(['email' => $message]);
         }
 
         $email = Str::lower(trim((string) $google->getEmail()));
@@ -75,8 +80,18 @@ class GoogleController extends Controller
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
-    private function configured(): bool
+    /** Pesan konfigurasi yang jelas jika kunci Google belum terbaca; null jika sudah lengkap. */
+    private function missingConfig(): ?string
     {
-        return filled(config('services.google.client_id')) && filled(config('services.google.client_secret'));
+        $missing = collect(['GOOGLE_CLIENT_ID' => 'services.google.client_id', 'GOOGLE_CLIENT_SECRET' => 'services.google.client_secret'])
+            ->filter(fn ($key) => blank(config($key)))
+            ->keys();
+
+        if ($missing->isEmpty()) {
+            return null;
+        }
+
+        return 'Login dengan Google belum dikonfigurasi: '.$missing->implode(' dan ').' belum terbaca. '
+            .'Pastikan sudah diisi di file .env (bukan .env.example), lalu jalankan "php artisan config:clear".';
     }
 }
