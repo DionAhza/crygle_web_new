@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\MentorController as AdminMentorController;
+use App\Http\Controllers\Admin\MentorTypeController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\Mentor\AssignmentController;
@@ -37,6 +40,10 @@ Route::get('/sertifikat/{enrollment}/unduh', [CertificateController::class, 'dow
 Route::post('/midtrans/notification', MidtransNotificationController::class)->name('midtrans.notification');
 
 Route::get('/dashboard', function () {
+    if (auth()->user()->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    }
+
     if (auth()->user()->hasRole('mentor')) {
         return redirect()->route('mentor.dashboard');
     }
@@ -94,6 +101,14 @@ Route::middleware(['auth', 'verified', 'role:mentor'])
         Route::get('submissions', [MentorSubmissionController::class, 'index'])->name('submissions.index');
         Route::get('submissions/{submission}', [MentorSubmissionController::class, 'show'])->name('submissions.show');
         Route::patch('submissions/{submission}', [MentorSubmissionController::class, 'review'])->name('submissions.review');
+    });
+
+// ---------------------------------------------------------------- Admin
+Route::middleware(['auth', 'verified', 'role:admin'])
+    ->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', AdminDashboardController::class)->name('dashboard');
+        Route::resource('mentor-types', MentorTypeController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('mentors', AdminMentorController::class)->except('show');
     });
 
 Route::middleware('auth')->group(function () {

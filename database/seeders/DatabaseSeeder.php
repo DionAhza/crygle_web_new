@@ -6,6 +6,7 @@ use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Lesson;
+use App\Models\MentorType;
 use App\Models\Module;
 use App\Models\Submission;
 use App\Models\User;
@@ -23,7 +24,14 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create(['name' => 'Admin Crygle', 'email' => 'admin@crygle.test']);
         $admin->assignRole('admin');
 
-        $mentor = User::factory()->create(['name' => 'Mentor Crygle', 'email' => 'mentor@crygle.test']);
+        // Tipe mentor bersifat dinamis (dikelola Admin); ini hanya contoh awal.
+        $types = collect(['3D', 'UI/UX', 'Web Development'])
+            ->mapWithKeys(fn ($name) => [$name => MentorType::create(['name' => $name, 'slug' => MentorType::uniqueSlug($name)])]);
+
+        $mentor = User::factory()->create([
+            'name' => 'Mentor Crygle', 'email' => 'mentor@crygle.test',
+            'mentor_type_id' => $types['Web Development']->id,
+        ]);
         $mentor->assignRole('mentor');
 
         $student = User::factory()->create(['name' => 'Siswa Demo', 'email' => 'student@crygle.test']);

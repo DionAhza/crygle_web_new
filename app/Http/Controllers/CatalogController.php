@@ -41,7 +41,7 @@ class CatalogController extends Controller
         // Kelas draft hanya boleh dipratinjau oleh mentor pemiliknya.
         abort_unless($course->is_published || ($user && $user->id === $course->mentor_id), 404);
 
-        $course->load(['mentor:id,name', 'modules.lessons:id,module_id,title,duration_seconds,sort_order,is_free_preview']);
+        $course->load(['mentor:id,name,mentor_type_id', 'mentor.mentorType:id,name', 'modules.lessons:id,module_id,title,duration_seconds,sort_order,is_free_preview']);
 
         $enrollment = $user?->hasRole('student')
             ? Enrollment::where('student_id', $user->id)->where('course_id', $course->id)->first()

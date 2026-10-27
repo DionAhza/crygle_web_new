@@ -23,6 +23,17 @@
                             Kelas Saya
                         </x-nav-link>
                     @endrole
+                    @role('admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            Dashboard Admin
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
+                            Mentor
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.mentor-types.index')" :active="request()->routeIs('admin.mentor-types.*')">
+                            Tipe Mentor
+                        </x-nav-link>
+                    @endrole
                     @role('mentor')
                         <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
                             Dashboard Mentor
@@ -95,6 +106,14 @@
             @role('student')
                 <x-responsive-nav-link :href="route('student.courses')" :active="request()->routeIs('student.*')">
                     Kelas Saya
+                </x-responsive-nav-link>
+            @endrole
+            @role('admin')
+                <x-responsive-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
+                    Mentor
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.mentor-types.index')" :active="request()->routeIs('admin.mentor-types.*')">
+                    Tipe Mentor
                 </x-responsive-nav-link>
             @endrole
             @role('mentor')

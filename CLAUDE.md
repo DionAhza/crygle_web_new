@@ -2,7 +2,7 @@
 **Project Name:** Crygle Academy (`crygle_academy`)
 **Project Type:** Learning Management System (LMS) / Enterprise Academic System
 **Framework:** Laravel 13 (PHP 8.3+) + Blade + Alpine.js + Tailwind CSS
-**Current Stage:** Post-MVP, Dynamic Roles, Google Auth & Enterprise Scaling (Fase 1–6 Selesai)
+**Current Stage:** Post-MVP, Dynamic Roles, Google Auth & Enterprise Scaling (Fase 1–8 Selesai)
 
 ---
 
@@ -98,11 +98,11 @@ Selain 8 tabel inti MVP, sistem ini sekarang mencakup ekspansi berikut:
 - [x] **Fase 6:** Sertifikat PDF Otomatis & Finalisasi
 
 ### Kustomisasi Klien & Autentikasi (Fokus Saat Ini):
-- [ ] **Fase 7: Manajemen Akun Mentor & Tipe Mentor Dinamis oleh Admin**
+- [x] **Fase 7: Manajemen Akun Mentor & Tipe Mentor Dinamis oleh Admin**
   - Pembuatan tabel `mentor_types` (CRUD oleh Admin).
   - Modul Admin untuk mendaftarkan akun Mentor baru dan menetapkan `mentor_type_id`.
   - Hapus fitur pendaftaran publik untuk akun Mentor.
-- [ ] **Fase 8: Integrasi Socialite (Google Login) & Verifikasi Email**
+- [x] **Fase 8: Integrasi Socialite (Google Login) & Verifikasi Email**
   - Implementasi Google Login via `laravel/socialite`.
   - Integrasi dengan `MustVerifyEmail` untuk pendaftar manual (non-Google).
 

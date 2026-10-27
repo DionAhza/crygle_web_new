@@ -10,7 +10,7 @@
             <a href="{{ route('catalog.index') }}" class="text-sm font-medium text-blue-700 hover:underline">← Kembali ke katalog</a>
             <span class="mt-4 block w-fit rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold capitalize text-blue-700">{{ $course->level }}</span>
             <h1 class="mt-3 text-3xl font-extrabold leading-tight text-blue-800">{{ $course->title }}</h1>
-            <p class="mt-2 text-sm text-slate-500">Mentor: <span class="font-semibold text-slate-700">{{ $course->mentor->name }}</span></p>
+            <p class="mt-2 text-sm text-slate-500">Mentor: <span class="font-semibold text-slate-700">{{ $course->mentor->name }}</span>@if ($course->mentor->mentorType) <span class="ms-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">{{ $course->mentor->mentorType->name }}</span>@endif</p>
 
             @if ($course->description)
                 <div class="prose prose-slate mt-6 max-w-none">{!! nl2br(e($course->description)) !!}</div>
