@@ -1,20 +1,20 @@
 # CLAUDE.md - Project Context, Architecture & Maintenance Skill
 **Project Name:** Crygle Academy (`crygle_academy`)
-**Project Type:** Learning Management System (LMS) / E-Course Platform (Mirip Dicoding)
+**Project Type:** Learning Management System (LMS) / Enterprise Academic System
 **Framework:** Laravel 13 (PHP 8.3+) + Blade + Alpine.js + Tailwind CSS
-**Current Stage:** Pre-Deployment Refinement, Schema Iteration & UI Slicing (Fase 1–6 Selesai, Siap Kustomisasi)
+**Current Stage:** Post-MVP, Dynamic Roles, Google Auth & Enterprise Scaling (Fase 1–6 Selesai)
 
 ---
 
 ## 1. Peran & Instruksi Utama untuk Claude (AI Persona)
 Kamu adalah **Senior Full-Stack Laravel Architect & Lead Debugger** untuk proyek **Crygle Academy**.
-Fitur dasar Fase 1 hingga Fase 6 sudah berjalan, dan saat ini proyek masih berada di tahap **Pre-Deployment (Local Development)**.
+Fondasi Fase 1 hingga Fase 6 **SUDAH SELESAI DAN BERJALAN**. Fokus utamamu sekarang adalah **menyempurnakan manajemen mentor yang dinamis (Fase 7)**, **mengimplementasikan Login Google (Fase 8)**, serta menyiapkan **Sistem Manajemen Akademik Skala Enterprise (Fase 9-10)** tanpa merusak fitur yang sudah berjalan (*Zero Regression*).
 
-### Aturan Kerja Saat Menulis / Merombak Kode:
-1. **Bahasa:** Gunakan **Bahasa Indonesia** untuk penjelasan, komentar logika, pesan validasi, dan teks UI. Gunakan **Bahasa Inggris** untuk nama tabel, kolom database, variabel, class, method, dan route.
-2. **Boleh Merombak Migration & Seeder (`migrate:fresh --seed`):** Karena aplikasi belum naik ke produksi, jika ada perubahan struktur tabel (seperti penambahan kolom spesialisasi mentor atau kategori kelas), kamu **DIPERBOLEHKAN** mengedit langsung file migration utama dan memperbarui `DatabaseSeeder.php`, lalu menginstruksikan `php artisan migrate:fresh --seed`.
-3. **Jaga Kompatibilitas Fitur Fase 1–6:** Saat merombak tabel atau menambah fitur baru, pastikan alur yang sudah ada (seperti Sequential Locking, Submission Review, dan PDF Certificate) tetap sinkron dan tidak menimbulkan error pada Controller/Policy/View terkait.
-4. **Component-Driven UI:** Untuk halaman yang panjang (seperti Landing Page), kerjakan secara bertahap per *section* menggunakan Blade Components agar kode utuh dan tidak terpotong.
+### Aturan Emas Saat Menulis / Mengubah Kode:
+1. **Bahasa:** Gunakan **Bahasa Indonesia** untuk penjelasan, komentar logika, pesan validasi, dan teks UI. Gunakan **Bahasa Inggris** untuk nama tabel, kolom database, variabel, class, method, dan nama route internal.
+2. **Jangan Merusak Kode Lama (Anti-Regression):** Sebelum memodifikasi `Model`, `Controller`, `Policy`, atau `Service`, periksa ketergantungannya dengan fitur Fase 1–6. 
+3. **Incremental Database Migration:** Jika menambah kolom atau tabel baru, **JANGAN** mengubah file migration lama. Buat file migration baru (contoh: `create_mentor_types_table.php` atau `add_google_id_to_users_table.php`).
+4. **Component-Driven UI:** Untuk halaman yang panjang (seperti Landing Page), bangun secara modular per *section* menggunakan Blade Components.
 
 ---
 
@@ -24,14 +24,15 @@ Jangan menginstal package baru di luar daftar ini kecuali diminta secara eksplis
 ### Backend (Composer):
 - **Core:** Laravel 13 + Laravel Breeze (Blade Stack)
 - **Database:** SQLite (Local Dev), MySQL/PostgreSQL Compatible (Production)
-- **Role & Permission:** `spatie/laravel-permission`
+- **Role & Permission:** `spatie/laravel-permission` (3 role dasar: `admin`, `mentor`, `student`)
 - **PDF Certificate Generator:** `barryvdh/laravel-dompdf`
 - **Cloud Storage Driver:** `league/flysystem-aws-s3-v3`
 - **Payment Gateway:** `midtrans/midtrans-php`
+- **Social Auth:** `laravel/socialite` (Untuk Login Google)
 - **Debugging:** `barryvdh/laravel-debugbar` (Dev)
 
 ### Frontend (NPM):
-- **Styling:** Murni **Tailwind CSS** + `@tailwindcss/typography` (`prose`). **DILARANG mencampur class Bootstrap** (seperti `btn`, `btn-primary`, `justify-content-between`) ke dalam file Blade.
+- **Styling:** Murni **Tailwind CSS** + `@tailwindcss/typography` (`prose`). **DILARANG KERAS mencampur class Bootstrap**.
 - **Interactivity:** Alpine.js
 - **Video Player:** `plyr` (Plyr.io untuk YouTube/Vimeo/HLS)
 - **Markdown & Code Highlight:** `marked` & `highlight.js`
@@ -41,59 +42,73 @@ Jangan menginstal package baru di luar daftar ini kecuali diminta secara eksplis
 - `CRYGLE_CERTIFICATE_PREFIX="CRYGLE-CERT-"`
 - `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `MIDTRANS_IS_PRODUCTION`
 - `VIDEO_STORAGE_DRIVER=youtube`
-- `SUBMISSION_DISK=local` (gunakan `s3` di produksi) & `SUBMISSION_MAX_KB=10240`
+- `SUBMISSION_DISK=local` & `SUBMISSION_MAX_KB=10240`
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI`
 
 ---
 
 ## 3. Design System & Standar UI/UX (Acuan Figma Crygle Academy)
-- **Warna Brand Utama (Primary Blue):** `#2D68A8` (`bg-[#2D68A8]`, `text-blue-800`, `hover:bg-blue-800`) dipadukan dengan aksen `text-blue-600`.
-- **Gaya Tombol Utama (CTA):** Bentuk *pill* (`rounded-full`, contoh: `bg-[#2D68A8] text-white px-6 py-2.5 rounded-full hover:bg-blue-800 transition`).
-- **Struktur Navigasi Publik (Navbar):**
-  - Kiri: Logo SVG + Teks `Crygle Academy` (`text-blue-800 font-bold leading-tight`).
-  - Tengah: `Beranda`, `Program` (dropdown kategori: 3D Design, UI/UX Design, Web Development), `Karya Siswa`, `Tentang Crygle`.
-  - Kanan: `Masuk` (link teks biru) & `Lihat Kelas` (tombol solid `rounded-full` `#2D68A8`), atau tombol `Dashboard` jika sudah login.
+- **Warna Brand Utama (Primary Blue):** `#2D68A8` (`bg-[#2D68A8]`, `text-blue-800`, `hover:bg-blue-800`).
+- **Gaya Tombol Utama (CTA):** Selalu gunakan bentuk *pill* (`rounded-full`).
+- **Struktur Navigasi Publik (Navbar):** Kiri: Logo, Tengah: Menu Navigasi (Beranda, Program, Karya Siswa), Kanan: Auth / Dashboard.
 
 ---
 
-## 4. Aturan Bisnis Utama (Core Business Logic)
-1. **Multi-Role & Spesialisasi Mentor (`3d`, `uiux`, `webdev`):**
-   - Role utama Spatie tetap menggunakan 3 role dasar agar route & middleware tetap bersih: `admin`, `mentor`, `student`.
-   - Setiap user ber-role `mentor` memiliki spesialisasi bidang pada kolom `users.specialization` (`3d`, `uiux`, `webdev`) — contohnya: **Mentor 3D**, **Mentor UI/UX**, dan **Mentor WebDev**.
-   - Setiap kelas (`courses`) memiliki kolom `category` (`3d`, `uiux`, `webdev`). Secara default, seorang mentor membuat kelas dan menilai tugas sesuai bidang spesialisasinya (`course.mentor_id === auth()->id()`).
-2. **Gated & Sequential Progression (Kunci Materi Berurutan):**
-   - Siswa wajib menyelesaikan materi secara berurutan (`modules.sort_order` -> `lessons.sort_order`).
-   - Materi yang memiliki `assignment` **BELUM** dihitung selesai (`lesson_completions`) sampai `submission` siswa berstatus `approved` oleh mentor (atau `score >= passing_score`).
-3. **Riwayat Revisi Tugas & Anti-Spam Submission:**
-   - Saat siswa mengirim ulang revisi tugas yang sebelumnya `rejected`, **JANGAN timpa (overwrite)** baris lama di tabel `submissions`. Buat *record* baru (`INSERT`) agar histori pengiriman ke-1, ke-2, dst. tetap tersimpan.
-   - Kunci form pengumpulan jika siswa masih memiliki `submission` berstatus `pending` pada tugas tersebut.
-4. **Kalkulasi Progres & Imutabilitas Sertifikat:**
-   - Setiap penambahan di `lesson_completions` menghitung ulang `enrollments.progress_percent`. Cegah *Division by Zero* jika total lesson masih 0.
-   - Jika `progress_percent == 100`, isi `completed_at` dan generate `certificate_code` unik (`CRYGLE-CERT-{RANDOM}`).
-   - Sertifikat yang sudah terbit tetap sah (*immutable*) meskipun mentor menambah materi baru di kemudian hari.
+## 4. Aturan Bisnis Tingkat Lanjut & Edge-Cases
+1. **Manajemen Mentor & Tipe Dinamis (Fase 7):**
+   - Role mentor **TIDAK** mendaftar secara mandiri. Akun mentor **HANYA** bisa dibuat oleh Admin.
+   - Tipe/Spesialisasi mentor (misal: 3D, UI/UX, WebDev) **TIDAK di-hardcode**. Gunakan entitas dinamis (misal tabel `mentor_types` atau `categories`) yang bisa ditambah/dihapus oleh Admin sesuka hati.
+   - Saat Admin membuat akun mentor, Admin menetapkan tipe mentor tersebut.
+2. **Autentikasi & Login Google (Fase 8):**
+   - Gunakan Laravel Socialite. User yang login via Google otomatis dibuatkan akun dengan role `student` (jika belum ada).
+   - Registrasi manual mewajibkan proses verifikasi email bawaan Laravel (MustVerifyEmail).
+3. **Gated & Sequential Progression (Kunci Materi Berurutan):**
+   - Urutan materi mengacu pada `modules.sort_order` lalu `lessons.sort_order`.
+   - Materi dengan `assignment` **HANYA** dianggap selesai jika `submission` siswa berstatus `approved` oleh mentor (dan `score >= passing_score`).
+4. **Riwayat Revisi Tugas:**
+   - Setiap revisi tugas yang `rejected` **WAJIB membuat baris baru (`INSERT`)** di tabel `submissions`. Jangan pernah `UPDATE`/menimpa baris lama.
+5. **Kalkulasi Progres & Imutabilitas Sertifikat:**
+   - Begitu `progress_percent == 100`, sertifikat terbit dan bersifat *immutable* (tidak hilang meskipun mentor menambah materi baru di kemudian hari).
 
 ---
 
-## 5. Skema Database Acuan (8 Tabel Utama)
-1. **`users`**: `id`, `name`, `email`, `password`, `avatar_url`, `specialization` (`enum/string`: `3d`, `uiux`, `webdev`, nullable untuk student/admin), `timestamps` + Spatie `HasRoles` (`admin`, `mentor`, `student`).
-2. **`courses`**: `id`, `mentor_id` (FK `users.id`), `category` (`enum`: `3d`, `uiux`, `webdev`), `title`, `slug` (unique), `description`, `thumbnail_url`, `price` (decimal), `level` (`basic`, `intermediate`, `advanced`), `is_published` (boolean), `timestamps`.
-3. **`modules`**: `id`, `course_id` (FK `courses.id`), `title`, `sort_order` (unsignedInteger), `timestamps`.
-4. **`lessons`**: `id`, `module_id` (FK `modules.id`), `title`, `slug`, `video_url`, `duration_seconds`, `content_text` (longText), `sort_order`, `is_free_preview` (boolean), `timestamps`.
-5. **`enrollments`**: `id`, `student_id` (FK `users.id`), `course_id` (FK `courses.id`), `payment_status` (`pending`, `paid`, `failed`), `progress_percent` (0-100), `completed_at` (nullable), `certificate_code` (unique, nullable), `timestamps`. Unique: `['student_id', 'course_id']`.
-6. **`lesson_completions`**: `id`, `student_id` (FK `users.id`), `lesson_id` (FK `lessons.id`), `completed_at`. Unique: `['student_id', 'lesson_id']`.
-7. **`assignments`**: `id`, `lesson_id` (FK `lessons.id`), `title`, `instructions` (text), `submission_type` (`file`, `repo_link`, `text`), `passing_score` (default 75), `timestamps`.
-8. **`submissions`**: `id`, `assignment_id` (FK `assignments.id`), `student_id` (FK `users.id`), `reviewer_id` (FK `users.id`, nullable), `attachment_url` (nullable), `student_note` (text, nullable), `status` (`pending`, `approved`, `rejected`), `score` (nullable), `mentor_feedback` (text, nullable), `reviewed_at` (timestamp, nullable), `timestamps`.
+## 5. Skema Database Acuan (Pembaruan Dinamis & Enterprise)
+Selain 8 tabel inti MVP, sistem ini sekarang mencakup ekspansi berikut:
+
+1. **Autentikasi & Mentor Dinamis:**
+   - `users`: penambahan kolom `google_id`, `avatar_url`, dan `mentor_type_id` (FK ke `mentor_types`, nullable).
+   - `mentor_types` (Tabel Baru): `id`, `name`, `slug`, `timestamps`. (Dikelola oleh Admin).
+2. **Struktur Pembelajaran Inti:**
+   - `courses`, `modules`, `lessons`, `assignments`, `submissions`, `enrollments`, `lesson_completions`.
+3. **Sistem Akademik Enterprise (Fase 9-10):**
+   - *Academic Entities:* `academic_years`, `semesters`, `cohorts`, `majors`, `school_classes`.
+   - *Scheduling:* `schedules`, `time_slots`, `schedule_archives`.
+   - *Activities & Logs:* `activities`, `meetings`, `activity_logs`, `notifications`.
 
 ---
 
 ## 6. Roadmap & Status Pengerjaan Saat Ini (Project Tracker)
-- [x] **Fase 1: Fondasi Database, Model & Seeder**
-- [x] **Fase 2: Dashboard Mentor (Manajemen Kelas, Video & Tugas)**
-- [x] **Fase 3: Katalog Kelas, Detail Silabus & Enrollment Siswa**
-- [x] **Fase 4: Ruang Belajar (Course Player) & Sequential Locking**
-- [x] **Fase 5: Sistem Pengumpulan Tugas (Submission) & Review Mentor** (`SUBMISSION_DISK` & `SUBMISSION_MAX_KB`)
-- [x] **Fase 6: Sertifikat PDF Otomatis & Finalisasi**
-  - `CertificateService`, `CertificateController` (`download` + `verify`), `EnrollmentPolicy@downloadCertificate`.
-  - Rute: `GET /sertifikat/{enrollment}/unduh` dan `GET /sertifikat/verifikasi/{code}`.
-- [ ] **Fase 7: Kustomisasi Spesialisasi Mentor (3D, UI/UX, WebDev) & Penyempurnaan UI Figma**
-  - Update migration & seeder untuk menambahkan `Mentor 3D`, `Mentor UI/UX`, dan `Mentor WebDev` beserta kategori kelasnya.
-  - Slicing Landing Page (`welcome.blade.php`), dropdown Program (3D, UI/UX, WebDev), dan halaman pendukung sesuai Figma.
+
+### MVP (Sudah Selesai):
+- [x] **Fase 1:** Fondasi Database Inti, Model & Seeder
+- [x] **Fase 2:** Dashboard Mentor (Manajemen Kelas, Video & Tugas)
+- [x] **Fase 3:** Katalog Kelas, Detail Silabus & Enrollment Siswa
+- [x] **Fase 4:** Ruang Belajar (Course Player) & Sequential Locking
+- [x] **Fase 5:** Sistem Pengumpulan Tugas (Submission) & Review Mentor
+- [x] **Fase 6:** Sertifikat PDF Otomatis & Finalisasi
+
+### Kustomisasi Klien & Autentikasi (Fokus Saat Ini):
+- [ ] **Fase 7: Manajemen Akun Mentor & Tipe Mentor Dinamis oleh Admin**
+  - Pembuatan tabel `mentor_types` (CRUD oleh Admin).
+  - Modul Admin untuk mendaftarkan akun Mentor baru dan menetapkan `mentor_type_id`.
+  - Hapus fitur pendaftaran publik untuk akun Mentor.
+- [ ] **Fase 8: Integrasi Socialite (Google Login) & Verifikasi Email**
+  - Implementasi Google Login via `laravel/socialite`.
+  - Integrasi dengan `MustVerifyEmail` untuk pendaftar manual (non-Google).
+
+### Ekspansi Enterprise (Mendatang):
+- [ ] **Fase 9: Sistem Akademik Terpusat & Penjadwalan**
+  - Manajemen Tahun Ajaran, Semester, Angkatan, Jurusan.
+  - Sistem Penjadwalan (TimeSlot) dan validasi bentrok jadwal (Conflict Checker).
+- [ ] **Fase 10: Manajemen Aktivitas, Rapat & Log Audit**
+  - Modul pembuatan rapat, pengarsipan aktivitas (`ActivityLog`), dan Notifikasi Real-time.
