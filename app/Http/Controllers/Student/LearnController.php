@@ -78,6 +78,7 @@ class LearnController extends Controller
         $isCompleted = ($states[$lesson->id] ?? null) === 'completed';
 
         $lesson->loadMissing('assignment');
+        $course->loadMissing('mentor.mentorType');
 
         // Riwayat pengiriman tugas (terbaru dulu) hanya relevan untuk siswa terdaftar.
         $submissions = collect();
