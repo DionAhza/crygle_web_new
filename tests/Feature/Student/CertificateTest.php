@@ -5,7 +5,9 @@ namespace Tests\Feature\Student;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Lesson;
+use App\Models\Assignment;
 use App\Models\Module;
+use App\Models\Submission;
 use App\Models\User;
 use App\Services\CertificateService;
 use Database\Seeders\RolesAndPermissionsSeeder;
@@ -162,10 +164,51 @@ class CertificateTest extends TestCase
 
         $this->assertSame('17 Agustus 2026', $data['completedOn']);
         $this->assertSame('Dasar', $data['courseLevel']);
+        $this->assertStringStartsWith('data:image/png;base64,', $data['qr']);
         $this->assertSame(3, $data['lessonCount']);
         $this->assertSame(
             'sertifikat-dasar-laravel-'.strtolower($enrollment->certificate_code).'.pdf',
             $service->filename($enrollment),
         );
+    }
+
+    private function gradedAssignments(array $scores): void
+    {
+        foreach ($this->course->lessons()->orderBy('lessons.id')->get()->take(count($scores)) as $i => $lesson) {
+            $assignment = Assignment::factory()->create(['lesson_id' => $lesson->id, 'title' => 'Tugas '.($i + 1)]);
+            Submission::factory()->create([
+                'assignment_id' => $assignment->id, 'student_id' => $this->student->id,
+                'status' => 'approved', 'score' => $scores[$i], 'reviewed_at' => now(),
+            ]);
+        }
+    }
+
+    public function test_assessment_rows_use_best_approved_score_and_average_total(): void
+    {
+        $enrollment = $this->enrollment();
+        $this->gradedAssignments([80, 91]);
+
+        $data = app(CertificateService::class)->data($enrollment);
+
+        $this->assertCount(2, $data['assessments']);
+        $this->assertSame([80, 91], $data['assessments']->pluck('score')->all());
+        $this->assertSame(86, $data['totalScore']); // round(85.5)
+    }
+
+    public function test_certificate_without_graded_assignments_is_single_page_and_with_them_two_pages(): void
+    {
+        $enrollment = $this->enrollment();
+        $service = app(CertificateService::class);
+
+        $one = $service->render($enrollment)->output();
+        $this->assertSame(1, preg_match_all('/\/Type\s*\/Page\b/', $one));
+
+        $this->gradedAssignments([80, 91, 100]);
+        $two = $service->render($enrollment->fresh())->output();
+        $this->assertSame(2, preg_match_all('/\/Type\s*\/Page\b/', $two));
+
+        if ($dir = getenv('CERT_PREVIEW_DIR')) {
+            file_put_contents($dir.'/preview.pdf', $two);
+        }
     }
 }
