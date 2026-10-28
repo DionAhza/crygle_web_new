@@ -1,5 +1,5 @@
 @use('App\Support\Format')
-<x-checkout-layout title="Kuitansi Pembayaran">
+<x-site-layout title="Kuitansi Pembayaran">
     <div class="mx-auto max-w-md">
         <section class="rounded-2xl border border-blue-100 bg-white p-7 shadow-sm shadow-blue-900/5 print:border-0 print:shadow-none">
             <div class="flex items-start justify-between">
@@ -29,4 +29,4 @@
             <a href="{{ route('student.checkout.success', $enrollment) }}" class="rounded-full border border-brand px-8 py-3 text-xs font-semibold text-brand hover:bg-brand-50">Kembali</a>
         </div>
     </div>
-</x-checkout-layout>
+</x-site-layout>

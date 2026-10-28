@@ -1,5 +1,5 @@
 @use('App\Support\Format')
-<x-checkout-layout title="Pembayaran Berhasil">
+<x-site-layout title="Pembayaran Berhasil">
     <div class="mx-auto max-w-xl text-center">
         <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-white shadow-lg shadow-blue-900/10">
             <span class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
@@ -56,4 +56,4 @@
             @endforeach
         </ul>
     </div>
-</x-checkout-layout>
+</x-site-layout>

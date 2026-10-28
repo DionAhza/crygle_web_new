@@ -1,5 +1,5 @@
 @use('App\Support\Format')
-<x-checkout-layout title="Memproses Pembayaran">
+<x-site-layout title="Memproses Pembayaran">
     <div class="mx-auto max-w-md"
          x-data="paymentPoll(@js(route('student.checkout.status', $enrollment)), @js(route('student.checkout.success', $enrollment)))"
          x-init="start()">
@@ -74,4 +74,4 @@
             }));
         });
     </script>
-</x-checkout-layout>
+</x-site-layout>

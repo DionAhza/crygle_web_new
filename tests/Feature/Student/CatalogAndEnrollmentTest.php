@@ -64,6 +64,20 @@ class CatalogAndEnrollmentTest extends TestCase
             ->assertSee('Masuk untuk Mendaftar');
     }
 
+    public function test_course_detail_shows_tabs_price_card_and_similar_courses(): void
+    {
+        $course = $this->course(['title' => 'Kelas Utama', 'price' => 449000, 'level' => 'advanced']);
+        $this->course(['title' => 'Kelas Mirip Satu', 'level' => 'advanced']);
+        $this->course(['title' => 'Kelas Draft Tersembunyi', 'is_published' => false]);
+        Module::factory()->create(['course_id' => $course->id, 'title' => 'Bab Satu']);
+
+        $this->get(route('catalog.show', $course))->assertOk()
+            ->assertSee('Course Overview')->assertSee('Kurikulum Kelas')->assertSee('Tentang Mentor')->assertSee('Reviews')
+            ->assertSee('Rp 449.000')->assertSee('Advanced Level Class')->assertSee('Certificate of Completion')
+            ->assertSee('Apa yang Akan Kamu Dapat?')->assertSee('Bab Satu')
+            ->assertSee('Course Serupa')->assertSee('Kelas Mirip Satu')->assertDontSee('Kelas Draft Tersembunyi');
+    }
+
     public function test_draft_course_is_404_except_for_owner(): void
     {
         $course = $this->course(['is_published' => false]);

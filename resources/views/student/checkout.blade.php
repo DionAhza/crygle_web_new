@@ -1,5 +1,5 @@
 @use('App\Support\Format')
-<x-checkout-layout title="Konfirmasi Pembayaran">
+<x-site-layout title="Konfirmasi Pembayaran">
     <x-checkout-steps :active="2" />
 
     <div class="mx-auto mt-10 max-w-md">
@@ -66,4 +66,4 @@
             <a href="{{ route('student.courses') }}" class="mt-4 block text-center text-xs text-slate-500 hover:text-brand hover:underline">Kembali ke Kelas Saya</a>
         </section>
     </div>
-</x-checkout-layout>
+</x-site-layout>

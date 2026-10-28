@@ -47,7 +47,17 @@ class CatalogController extends Controller
             ? Enrollment::where('student_id', $user->id)->where('course_id', $course->id)->first()
             : null;
 
+        // Kelas serupa: prioritaskan level yang sama, lalu yang terbaru.
+        $similar = Course::published()
+            ->where('id', '!=', $course->id)
+            ->with('mentor:id,name')
+            ->orderByRaw('case when level = ? then 0 else 1 end', [$course->level])
+            ->latest()
+            ->limit(3)
+            ->get();
+
         return view('catalog.show', [
+            'similar' => $similar,
             'course' => $course,
             'enrollment' => $enrollment,
             'lessonCount' => $course->modules->sum(fn ($m) => $m->lessons->count()),
