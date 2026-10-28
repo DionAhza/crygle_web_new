@@ -73,6 +73,9 @@ Route::middleware(['auth', 'verified', 'role:student'])->name('student.')->group
     Route::post('/kelas/{course}/daftar', [StudentEnrollmentController::class, 'store'])->name('enroll');
     Route::get('/checkout/{enrollment}', [CheckoutController::class, 'show'])->name('checkout');
     Route::get('/checkout/{enrollment}/selesai', [CheckoutController::class, 'finish'])->name('checkout.finish');
+    Route::get('/checkout/{enrollment}/status', [CheckoutController::class, 'status'])->name('checkout.status');
+    Route::get('/checkout/{enrollment}/berhasil', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/{enrollment}/kuitansi', [CheckoutController::class, 'receipt'])->name('checkout.receipt');
     Route::post('/checkout/{enrollment}/simulate', [CheckoutController::class, 'simulate'])->name('checkout.simulate');
     Route::post('/belajar/{course}/materi/{lesson}/tugas', [StudentSubmissionController::class, 'store'])->name('submissions.store');
 });

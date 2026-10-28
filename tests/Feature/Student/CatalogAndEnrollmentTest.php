@@ -216,7 +216,7 @@ class CatalogAndEnrollmentTest extends TestCase
 
         $this->actingAs($enrollment->student)
             ->get(route('student.checkout.finish', $enrollment).'?order_id='.$orderId)
-            ->assertRedirect(route('student.courses'));
+            ->assertRedirect(route('student.checkout.success', $enrollment));
 
         $this->assertSame('paid', $enrollment->fresh()->payment_status);
     }
@@ -226,12 +226,47 @@ class CatalogAndEnrollmentTest extends TestCase
         $enrollment = Enrollment::factory()->create(['payment_status' => 'pending', 'course_id' => $this->course(['price' => 150000])->id, 'student_id' => $this->user('student')->id]);
         $this->fakeMidtrans(['order_id' => 'ENR-999-1', 'gross_amount' => '150000.00', 'transaction_status' => 'settlement']);
 
-        $this->actingAs($enrollment->student)->get(route('student.checkout.finish', $enrollment).'?order_id=ENR-999-1');
+        $this->actingAs($enrollment->student)->get(route('student.checkout.finish', $enrollment).'?order_id=ENR-999-1')
+            ->assertOk()->assertSee('Memproses pembayaran kamu');
         $this->assertSame('pending', $enrollment->fresh()->payment_status);
 
         $orderId = 'ENR-'.$enrollment->id.'-1';
         $this->fakeMidtrans(['order_id' => $orderId, 'gross_amount' => '150000.00', 'transaction_status' => 'pending']);
         $this->actingAs($enrollment->student)->get(route('student.checkout.finish', $enrollment).'?order_id='.$orderId);
         $this->assertSame('pending', $enrollment->fresh()->payment_status);
+    }
+
+    public function test_status_endpoint_reports_paid_and_failed(): void
+    {
+        $enrollment = Enrollment::factory()->create(['payment_status' => 'pending', 'course_id' => $this->course(['price' => 150000])->id, 'student_id' => $this->user('student')->id, 'midtrans_order_id' => 'ENR-0-1']);
+        $orderId = 'ENR-'.$enrollment->id.'-1';
+        $enrollment->update(['midtrans_order_id' => $orderId]);
+
+        $this->fakeMidtrans(['order_id' => $orderId, 'gross_amount' => '150000.00', 'transaction_status' => 'expire']);
+        $this->actingAs($enrollment->student)->getJson(route('student.checkout.status', $enrollment))
+            ->assertOk()->assertJson(['paid' => false, 'status' => 'failed']);
+
+        $enrollment->update(['payment_status' => 'pending']);
+        $this->fakeMidtrans(['order_id' => $orderId, 'gross_amount' => '150000.00', 'transaction_status' => 'settlement']);
+        $this->actingAs($enrollment->student)->getJson(route('student.checkout.status', $enrollment))
+            ->assertOk()->assertJson(['paid' => true, 'status' => 'paid']);
+    }
+
+    public function test_success_and_receipt_pages_only_for_paid_owner(): void
+    {
+        $course = $this->course(['price' => 150000]);
+        $paid = Enrollment::factory()->create(['payment_status' => 'paid', 'course_id' => $course->id, 'student_id' => $this->user('student')->id]);
+        $pending = Enrollment::factory()->create(['payment_status' => 'pending', 'course_id' => $course->id, 'student_id' => $this->user('student')->id]);
+
+        $this->actingAs($paid->student)->get(route('student.checkout.success', $paid))
+            ->assertOk()->assertSee('Pembayaran Berhasil')->assertSee($course->title)->assertSee('Mulai Belajar');
+        $this->actingAs($paid->student)->get(route('student.checkout.receipt', $paid))
+            ->assertOk()->assertSee('Kuitansi Pembayaran')->assertSee('Rp 150.000')->assertSee('Lunas');
+
+        $this->actingAs($pending->student)->get(route('student.checkout.success', $pending))->assertRedirect(route('student.checkout', $pending));
+        $this->actingAs($pending->student)->get(route('student.checkout.receipt', $pending))->assertRedirect(route('student.checkout', $pending));
+
+        $this->actingAs($this->user('student'))->get(route('student.checkout.success', $paid))->assertForbidden();
+        $this->actingAs($this->user('student'))->getJson(route('student.checkout.status', $paid))->assertForbidden();
     }
 }

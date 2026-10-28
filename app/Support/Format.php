@@ -17,6 +17,12 @@ class Format
         return max($minutes, $seconds > 0 ? 1 : 0).' menit';
     }
 
+    /** 'basic' => "Dasar" */
+    public static function level(?string $level): string
+    {
+        return ['basic' => 'Dasar', 'intermediate' => 'Menengah', 'advanced' => 'Lanjutan'][$level] ?? ucfirst((string) $level);
+    }
+
     /** 765 => "12:45", 3725 => "1:02:05" (format pemutar video) */
     public static function clock(int $seconds): string
     {
