@@ -72,6 +72,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->name('student.')->group
     Route::get('/kelas-saya', MyCoursesController::class)->name('courses');
     Route::post('/kelas/{course}/daftar', [StudentEnrollmentController::class, 'store'])->name('enroll');
     Route::get('/checkout/{enrollment}', [CheckoutController::class, 'show'])->name('checkout');
+    Route::get('/checkout/{enrollment}/selesai', [CheckoutController::class, 'finish'])->name('checkout.finish');
     Route::post('/checkout/{enrollment}/simulate', [CheckoutController::class, 'simulate'])->name('checkout.simulate');
     Route::post('/belajar/{course}/materi/{lesson}/tugas', [StudentSubmissionController::class, 'store'])->name('submissions.store');
 });

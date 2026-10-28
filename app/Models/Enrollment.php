@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['student_id', 'course_id', 'payment_status', 'progress_percent', 'completed_at', 'certificate_code'])]
+#[Fillable(['student_id', 'course_id', 'payment_status', 'midtrans_order_id', 'progress_percent', 'completed_at', 'certificate_code'])]
 class Enrollment extends Model
 {
     use HasFactory;

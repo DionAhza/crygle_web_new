@@ -28,8 +28,8 @@
                     <script>
                         document.getElementById('pay-button').addEventListener('click', () => {
                             window.snap.pay(@js($snapToken), {
-                                onSuccess: () => window.location = @js(route('student.courses')),
-                                onPending: () => window.location = @js(route('student.courses')),
+                                onSuccess: (r) => window.location = @js(route('student.checkout.finish', $enrollment)) + '?order_id=' + encodeURIComponent(r.order_id),
+                                onPending: (r) => window.location = @js(route('student.checkout.finish', $enrollment)) + '?order_id=' + encodeURIComponent(r.order_id),
                                 onError: () => alert('Pembayaran gagal. Silakan coba lagi.'),
                             });
                         });

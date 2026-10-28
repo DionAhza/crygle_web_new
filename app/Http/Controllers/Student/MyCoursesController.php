@@ -5,14 +5,16 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
 use App\Models\LessonCompletion;
+use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MyCoursesController extends Controller
 {
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request, MidtransService $midtrans): View
     {
         $user = $request->user();
+        $this->syncPending($user, $midtrans);
 
         $enrollments = $user->enrollments()
             ->with('course.mentor.mentorType')
@@ -46,5 +48,20 @@ class MyCoursesController extends Controller
             'lessonTotals' => $totals,
             'lessonDone' => $done,
         ]);
+    }
+
+    /** Aktifkan otomatis kelas yang sudah dibayar tetapi webhook-nya belum masuk. */
+    private function syncPending($user, MidtransService $midtrans): void
+    {
+        if (! $midtrans->configured()) {
+            return;
+        }
+
+        $user->enrollments()
+            ->where('payment_status', 'pending')
+            ->whereNotNull('midtrans_order_id')
+            ->with('course')
+            ->get()
+            ->each(fn ($e) => $midtrans->syncEnrollment($e));
     }
 }

@@ -110,7 +110,10 @@
                                 <div class="text-sm font-semibold text-slate-800">{{ $enrollment->course->title }}</div>
                                 <div class="text-xs text-slate-500">{{ Format::rupiah($enrollment->course->price) }} · {{ $enrollment->payment_status === 'failed' ? 'Pembayaran gagal/kedaluwarsa' : 'Belum dibayar' }}</div>
                             </div>
-                            <a href="{{ route('student.checkout', $enrollment) }}" class="rounded-full bg-amber-500 px-5 py-2 text-xs font-semibold text-white hover:bg-amber-600">Bayar Sekarang</a>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('student.checkout.finish', $enrollment) }}" class="rounded-full border border-amber-300 bg-white px-4 py-2 text-xs font-semibold text-amber-700 hover:bg-amber-100">Cek Status</a>
+                                <a href="{{ route('student.checkout', $enrollment) }}" class="rounded-full bg-amber-500 px-5 py-2 text-xs font-semibold text-white hover:bg-amber-600">Bayar Sekarang</a>
+                            </div>
                         </div>
                     @endforeach
                 </div>

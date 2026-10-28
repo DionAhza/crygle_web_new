@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Enrollment;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Midtrans\Transaction;
+use Throwable;
 
 class MidtransService
 {
@@ -51,9 +53,11 @@ class MidtransService
 
         $enrollment->loadMissing(['course', 'student']);
 
-        return Snap::getSnapToken([
+        $orderId = $this->orderId($enrollment);
+
+        $token = Snap::getSnapToken([
             'transaction_details' => [
-                'order_id' => $this->orderId($enrollment),
+                'order_id' => $orderId,
                 'gross_amount' => $this->grossAmount($enrollment),
             ],
             'item_details' => [[
@@ -67,6 +71,61 @@ class MidtransService
                 'email' => $enrollment->student->email,
             ],
         ]);
+
+        // Simpan order terakhir agar status bisa dicek ke Midtrans tanpa menunggu webhook.
+        $enrollment->update(['midtrans_order_id' => $orderId]);
+
+        return $token;
+    }
+
+    /**
+     * Menyamakan status enrollment dengan Midtrans (tanpa webhook, jadi tetap jalan di localhost).
+     * Mengembalikan true bila enrollment sudah lunas setelah pengecekan.
+     */
+    public function syncEnrollment(Enrollment $enrollment, ?string $orderId = null): bool
+    {
+        if ($enrollment->isPaid()) {
+            return true;
+        }
+        if (! $this->configured()) {
+            return false;
+        }
+
+        $orderId ??= $enrollment->midtrans_order_id;
+        if (! $orderId || $this->enrollmentIdFromOrderId($orderId) !== $enrollment->id) {
+            return false;
+        }
+
+        try {
+            $status = $this->fetchStatus($orderId);
+        } catch (Throwable $e) {
+            report($e); // mis. order belum ada di Midtrans (404)
+
+            return false;
+        }
+
+        if (($status['order_id'] ?? null) !== $orderId) {
+            return false;
+        }
+        if ((int) round((float) ($status['gross_amount'] ?? 0)) !== $this->grossAmount($enrollment)) {
+            return false;
+        }
+
+        $new = $this->mapStatus($status);
+        if ($new !== 'pending') { // pending tidak menimpa status failed sebelumnya
+            $enrollment->update(['payment_status' => $new]);
+        }
+
+        return $enrollment->isPaid();
+    }
+
+    /** @return array<string, mixed> status transaksi dari API Midtrans */
+    public function fetchStatus(string $orderId): array
+    {
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$isProduction = (bool) config('services.midtrans.is_production');
+
+        return json_decode(json_encode(Transaction::status($orderId)), true) ?: [];
     }
 
     /** signature_key = SHA512(order_id + status_code + gross_amount + server_key) */

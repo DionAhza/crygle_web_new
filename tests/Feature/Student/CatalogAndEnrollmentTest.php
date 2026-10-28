@@ -112,6 +112,7 @@ class CatalogAndEnrollmentTest extends TestCase
     {
         $this->mock(MidtransService::class, function ($mock) {
             $mock->shouldReceive('configured')->andReturn(true);
+            $mock->shouldReceive('syncEnrollment')->andReturn(false);
             $mock->shouldReceive('createSnapToken')->once()->andReturn('snap-token-123');
             $mock->shouldReceive('snapJsUrl')->andReturn('https://app.sandbox.midtrans.com/snap/snap.js');
             $mock->shouldReceive('clientKey')->andReturn('client-key');
@@ -192,5 +193,45 @@ class CatalogAndEnrollmentTest extends TestCase
         $paid = Enrollment::factory()->create(['payment_status' => 'paid', 'course_id' => $this->course(['price' => 150000])->id]);
         $this->postJson('/midtrans/notification', $this->notification($paid, ['transaction_status' => 'expire']))->assertOk();
         $this->assertSame('paid', $paid->fresh()->payment_status);
+    }
+
+    private function fakeMidtrans(array $status): void
+    {
+        config(['services.midtrans.server_key' => 'SB-key', 'services.midtrans.client_key' => 'SB-client']);
+        $this->app->bind(\App\Services\MidtransService::class, fn () => new class($status) extends \App\Services\MidtransService {
+            public function __construct(private array $status) {}
+
+            public function fetchStatus(string $orderId): array
+            {
+                return $this->status;
+            }
+        });
+    }
+
+    public function test_finish_activates_enrollment_when_midtrans_reports_settlement(): void
+    {
+        $enrollment = Enrollment::factory()->create(['payment_status' => 'pending', 'course_id' => $this->course(['price' => 150000])->id, 'student_id' => $this->user('student')->id]);
+        $orderId = 'ENR-'.$enrollment->id.'-1700000000';
+        $this->fakeMidtrans(['order_id' => $orderId, 'gross_amount' => '150000.00', 'transaction_status' => 'settlement']);
+
+        $this->actingAs($enrollment->student)
+            ->get(route('student.checkout.finish', $enrollment).'?order_id='.$orderId)
+            ->assertRedirect(route('student.courses'));
+
+        $this->assertSame('paid', $enrollment->fresh()->payment_status);
+    }
+
+    public function test_finish_ignores_order_id_of_another_enrollment_and_pending_status(): void
+    {
+        $enrollment = Enrollment::factory()->create(['payment_status' => 'pending', 'course_id' => $this->course(['price' => 150000])->id, 'student_id' => $this->user('student')->id]);
+        $this->fakeMidtrans(['order_id' => 'ENR-999-1', 'gross_amount' => '150000.00', 'transaction_status' => 'settlement']);
+
+        $this->actingAs($enrollment->student)->get(route('student.checkout.finish', $enrollment).'?order_id=ENR-999-1');
+        $this->assertSame('pending', $enrollment->fresh()->payment_status);
+
+        $orderId = 'ENR-'.$enrollment->id.'-1';
+        $this->fakeMidtrans(['order_id' => $orderId, 'gross_amount' => '150000.00', 'transaction_status' => 'pending']);
+        $this->actingAs($enrollment->student)->get(route('student.checkout.finish', $enrollment).'?order_id='.$orderId);
+        $this->assertSame('pending', $enrollment->fresh()->payment_status);
     }
 }
