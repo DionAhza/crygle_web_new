@@ -1,36 +1,40 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">Tipe Mentor</h2>
-    </x-slot>
+<x-panel-layout title="Tipe Mentor" heading="Tipe Mentor" subtitle="Spesialisasi mentor bersifat dinamis — tambah atau ubah sesuai kebutuhan." width="max-w-3xl">
+    <x-flash />
 
-    <div class="py-8">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <x-flash />
+    {{-- Tambah tipe --}}
+    <x-card>
+        <form method="POST" action="{{ route('admin.mentor-types.store') }}" class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            @csrf
+            <x-text-input name="name" :value="old('name')" placeholder="Nama tipe baru, mis. UI/UX" required maxlength="80" class="flex-1" aria-label="Nama tipe baru" />
+            <x-btn>+ Tambah Tipe</x-btn>
+        </form>
+    </x-card>
 
-            <form method="POST" action="{{ route('admin.mentor-types.store') }}" class="flex gap-2 rounded-xl border border-dashed border-slate-300 bg-white p-4">
-                @csrf
-                <input name="name" value="{{ old('name') }}" placeholder="Nama tipe baru, mis. UI/UX" required maxlength="80" class="flex-1 border-gray-300 rounded-md text-sm focus:border-indigo-500 focus:ring-indigo-500">
-                <button class="rounded-full bg-[#2D68A8] px-5 py-2 text-sm font-semibold text-white hover:bg-blue-800">+ Tambah</button>
-            </form>
-
-            <div class="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
-                @forelse ($types as $type)
-                    <div class="flex flex-wrap items-center gap-3 border-b border-slate-50 px-4 py-3 last:border-0">
-                        <form method="POST" action="{{ route('admin.mentor-types.update', $type) }}" class="flex flex-1 items-center gap-2">
-                            @csrf @method('PATCH')
-                            <input name="name" value="{{ $type->name }}" required maxlength="80" class="flex-1 border-gray-300 rounded-md text-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <button class="text-xs font-semibold text-indigo-600 hover:underline">Simpan</button>
-                        </form>
-                        <span class="text-xs text-slate-500">{{ $type->mentors_count }} mentor</span>
-                        <form method="POST" action="{{ route('admin.mentor-types.destroy', $type) }}" onsubmit="return confirm('Hapus tipe mentor ini?')">
-                            @csrf @method('DELETE')
-                            <button class="text-xs text-rose-600 hover:underline">Hapus</button>
-                        </form>
-                    </div>
-                @empty
-                    <p class="p-6 text-sm text-slate-500">Belum ada tipe mentor. Tambahkan tipe pertama di atas.</p>
-                @endforelse
-            </div>
+    {{-- Daftar tipe --}}
+    <x-card padding="p-0" class="mt-6 overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h2 class="text-sm font-bold text-slate-800">Daftar Tipe</h2>
+            <x-badge tone="brand">{{ $types->count() }} tipe</x-badge>
         </div>
-    </div>
-</x-app-layout>
+
+        @forelse ($types as $type)
+            <div class="flex flex-wrap items-center gap-3 border-b border-slate-50 px-6 py-4 last:border-0">
+                <form method="POST" action="{{ route('admin.mentor-types.update', $type) }}" class="flex min-w-[220px] flex-1 items-center gap-2">
+                    @csrf @method('PATCH')
+                    <x-text-input name="name" :value="$type->name" required maxlength="80" class="!h-10 flex-1" aria-label="Nama tipe" />
+                    <x-btn variant="soft" size="sm">Simpan</x-btn>
+                </form>
+
+                <x-badge tone="slate">{{ $type->mentors_count }} mentor</x-badge>
+
+                <form method="POST" action="{{ route('admin.mentor-types.destroy', $type) }}" onsubmit="return confirm('Hapus tipe mentor ini?')">
+                    @csrf @method('DELETE')
+                    <x-btn variant="danger-soft" size="sm">Hapus</x-btn>
+                </form>
+            </div>
+        @empty
+            <x-empty-state title="Belum ada tipe mentor" description="Tambahkan tipe pertama lewat kolom di atas, mis. WebDev atau UI/UX."
+                           icon="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+        @endforelse
+    </x-card>
+</x-panel-layout>

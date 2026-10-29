@@ -51,6 +51,8 @@ Jangan menginstal package baru di luar daftar ini kecuali diminta secara eksplis
 - **Warna Brand Utama (Primary Blue):** `#2D68A8` (`bg-[#2D68A8]`, `text-blue-800`, `hover:bg-blue-800`).
 - **Gaya Tombol Utama (CTA):** Selalu gunakan bentuk *pill* (`rounded-full`).
 - **Struktur Navigasi Publik (Navbar):** Kiri: Logo, Tengah: Menu Navigasi (Beranda, Program, Karya Siswa), Kanan: Auth / Dashboard.
+- **Layout Panel (Admin, Mentor, Pengaturan):** Gunakan `<x-panel-layout title="..." heading="..." subtitle="..." :back="[...]">` (sidebar per peran, font Plus Jakarta Sans, latar `#f5f9ff`). Slot `actions` untuk tombol di kanan judul. **Jangan** memakai `x-app-layout` / `layouts.app` (sisa template Breeze, tidak dipakai lagi).
+- **Komponen UI Bersama (`resources/views/components`):** `x-card`, `x-section-title`, `x-stat`, `x-badge`, `x-btn` (variant: primary, secondary, soft, danger, danger-soft), `x-form-field` + `x-text-input` / `x-select` / `x-textarea`, `x-toggle`, `x-empty-state`, `x-avatar`. Kartu memakai `rounded-[20px]`, input `rounded-lg border-brand-border`, tombol `rounded-full`. Hindari class `indigo-*` dan `gray-*`.
 
 ---
 

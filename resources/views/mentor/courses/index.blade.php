@@ -1,41 +1,45 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-slate-800 leading-tight">Kelas Saya</h2>
-            <a href="{{ route('mentor.courses.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">+ Kelas Baru</a>
-        </div>
+<x-panel-layout title="Kelas Saya" heading="Kelas Saya" subtitle="Kelola kelas, bab, materi, dan tugas Anda.">
+    <x-slot name="actions">
+        <x-btn :href="route('mentor.courses.create')">+ Kelas Baru</x-btn>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-flash />
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
-                @forelse ($courses as $course)
-                    <div class="rounded-xl bg-white shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+    <x-flash />
+
+    @if ($courses->isEmpty())
+        <x-card>
+            <x-empty-state title="Belum ada kelas" description="Buat kelas pertama Anda dan mulai tambahkan bab serta materi.">
+                <x-btn :href="route('mentor.courses.create')" size="sm">+ Kelas Baru</x-btn>
+            </x-empty-state>
+        </x-card>
+    @else
+        <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            @foreach ($courses as $course)
+                <article class="flex flex-col rounded-[20px] border border-slate-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                    <a href="{{ route('mentor.courses.show', $course) }}" class="block">
                         @if ($course->thumbnail_url)
-                            <img src="{{ $course->thumbnail_url }}" alt="" class="h-36 w-full object-cover">
+                            <img src="{{ $course->thumbnail_url }}" alt="" class="h-[110px] w-full rounded-xl object-cover">
                         @else
-                            <div class="h-36 bg-gradient-to-br from-indigo-500 to-slate-700"></div>
+                            <div class="h-[110px] w-full rounded-xl bg-gradient-to-br from-brand to-slate-700"></div>
                         @endif
-                        <div class="p-5 flex-1 flex flex-col">
-                            <div class="flex items-center gap-2 text-xs">
-                                <span class="rounded-full bg-indigo-50 px-2 py-0.5 text-indigo-700 capitalize">{{ $course->level }}</span>
-                                <span class="rounded-full px-2 py-0.5 {{ $course->is_published ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600' }}">{{ $course->is_published ? 'Terbit' : 'Draft' }}</span>
-                            </div>
-                            <h3 class="mt-2 font-semibold text-slate-800">{{ $course->title }}</h3>
-                            <p class="mt-1 text-xs text-slate-500">{{ $course->modules_count }} bab · {{ $course->lessons_count }} materi · {{ $course->enrollments_count }} siswa</p>
-                            <p class="mt-1 text-sm font-medium text-slate-700">{{ $course->isFree() ? 'Gratis' : 'Rp '.number_format($course->price, 0, ',', '.') }}</p>
-                            <div class="mt-4 flex gap-2 pt-2">
-                                <a href="{{ route('mentor.courses.show', $course) }}" class="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700">Kelola</a>
-                                <a href="{{ route('mentor.courses.edit', $course) }}" class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">Edit</a>
-                            </div>
-                        </div>
+                    </a>
+
+                    <div class="mt-4 flex items-center gap-2">
+                        <x-badge tone="brand" class="capitalize">{{ $course->level }}</x-badge>
+                        <x-badge :tone="$course->is_published ? 'green' : 'slate'">{{ $course->is_published ? 'Terbit' : 'Draft' }}</x-badge>
                     </div>
-                @empty
-                    <p class="text-sm text-slate-500">Belum ada kelas.</p>
-                @endforelse
-            </div>
-            <div class="mt-6 px-4 sm:px-0">{{ $courses->links() }}</div>
+
+                    <h3 class="mt-3 line-clamp-2 text-base font-bold leading-snug text-slate-800">{{ $course->title }}</h3>
+                    <p class="mt-2 text-xs text-slate-500">{{ $course->modules_count }} bab · {{ $course->lessons_count }} materi · {{ $course->enrollments_count }} siswa</p>
+                    <p class="mt-1 text-sm font-bold text-brand">{{ $course->isFree() ? 'Gratis' : 'Rp '.number_format($course->price, 0, ',', '.') }}</p>
+
+                    <div class="mt-auto flex gap-2 pt-5">
+                        <x-btn :href="route('mentor.courses.show', $course)" size="sm" class="flex-1">Kelola</x-btn>
+                        <x-btn :href="route('mentor.courses.edit', $course)" variant="secondary" size="sm" class="flex-1">Edit</x-btn>
+                    </div>
+                </article>
+            @endforeach
         </div>
-    </div>
-</x-app-layout>
+    @endif
+
+    <div class="mt-6">{{ $courses->links() }}</div>
+</x-panel-layout>

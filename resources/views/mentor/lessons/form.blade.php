@@ -1,51 +1,54 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">{{ $lesson->exists ? 'Edit Materi' : 'Materi Baru' }} <span class="text-sm font-normal text-slate-500">— {{ $module->title }}</span></h2>
-    </x-slot>
+<x-panel-layout :title="$lesson->exists ? 'Edit Materi' : 'Materi Baru'"
+                :heading="$lesson->exists ? 'Edit Materi' : 'Materi Baru'"
+                :subtitle="'Bab: '.$module->title"
+                :back="['label' => $module->course->title, 'href' => route('mentor.courses.show', $module->course)]"
+                width="max-w-3xl">
+    <x-flash />
 
-    <div class="py-8">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <x-flash />
-            <form method="POST"
-                  action="{{ $lesson->exists ? route('mentor.lessons.update', $lesson) : route('mentor.lessons.store', $module) }}"
-                  class="space-y-5 rounded-xl bg-white p-6 shadow-sm border border-slate-100">
-                @csrf
-                @if ($lesson->exists) @method('PUT') @endif
+    <form method="POST"
+          action="{{ $lesson->exists ? route('mentor.lessons.update', $lesson) : route('mentor.lessons.store', $module) }}" class="space-y-6">
+        @csrf
+        @if ($lesson->exists) @method('PUT') @endif
 
-                <div>
-                    <x-input-label for="title" value="Judul Materi" />
-                    <x-text-input id="title" name="title" class="mt-1 block w-full" :value="old('title', $lesson->title)" required />
-                </div>
-                <div>
-                    <x-input-label for="video_url" value="URL Video (YouTube/Vimeo/HLS)" />
-                    <x-text-input id="video_url" name="video_url" type="url" class="mt-1 block w-full" :value="old('video_url', $lesson->video_url)" />
-                </div>
-                <div class="grid sm:grid-cols-2 gap-5">
-                    <div>
-                        <x-input-label for="duration_seconds" value="Durasi (detik)" />
-                        <x-text-input id="duration_seconds" name="duration_seconds" type="number" min="0" class="mt-1 block w-full" :value="old('duration_seconds', $lesson->duration_seconds)" />
-                    </div>
-                    @if ($lesson->exists)
-                        <div>
-                            <x-input-label for="sort_order" value="Urutan" />
-                            <x-text-input id="sort_order" name="sort_order" type="number" min="1" class="mt-1 block w-full" :value="old('sort_order', $lesson->sort_order)" />
-                        </div>
-                    @endif
-                </div>
-                <div>
-                    <x-input-label for="content_text" value="Materi Bacaan (Markdown)" />
-                    <textarea id="content_text" name="content_text" rows="12" class="mt-1 block w-full font-mono text-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('content_text', $lesson->content_text) }}</textarea>
-                </div>
-                <label class="flex items-center gap-2 text-sm text-slate-700">
-                    <input type="checkbox" name="is_free_preview" value="1" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" @checked(old('is_free_preview', $lesson->is_free_preview))>
-                    Jadikan preview gratis
-                </label>
+        <x-card class="space-y-5">
+            <x-section-title title="Video & Durasi" description="Judul materi dan sumber videonya."
+                             icon="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
 
-                <div class="flex items-center gap-3 pt-2">
-                    <x-primary-button class="!bg-indigo-600 hover:!bg-indigo-700">Simpan</x-primary-button>
-                    <a href="{{ route('mentor.courses.show', $module->course) }}" class="text-sm text-slate-600 hover:underline">Batal</a>
-                </div>
-            </form>
+            <x-form-field label="Judul Materi" for="title">
+                <x-text-input id="title" name="title" :value="old('title', $lesson->title)" required />
+            </x-form-field>
+
+            <x-form-field label="URL Video" for="video_url" hint="YouTube, Vimeo, atau HLS.">
+                <x-text-input id="video_url" name="video_url" type="url" :value="old('video_url', $lesson->video_url)" placeholder="https://" />
+            </x-form-field>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+                <x-form-field label="Durasi (detik)" for="duration_seconds">
+                    <x-text-input id="duration_seconds" name="duration_seconds" type="number" min="0" :value="old('duration_seconds', $lesson->duration_seconds)" />
+                </x-form-field>
+                @if ($lesson->exists)
+                    <x-form-field label="Urutan" for="sort_order">
+                        <x-text-input id="sort_order" name="sort_order" type="number" min="1" :value="old('sort_order', $lesson->sort_order)" />
+                    </x-form-field>
+                @endif
+            </div>
+        </x-card>
+
+        <x-card class="space-y-5">
+            <x-section-title title="Materi Bacaan" description="Tulis dengan Markdown — blok kode otomatis diberi highlight."
+                             icon="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+
+            <x-form-field label="Konten (Markdown)" for="content_text">
+                <x-textarea id="content_text" name="content_text" rows="12" class="font-mono">{{ old('content_text', $lesson->content_text) }}</x-textarea>
+            </x-form-field>
+
+            <x-toggle name="is_free_preview" label="Jadikan preview gratis" description="Calon siswa bisa melihat materi ini tanpa mendaftar."
+                      :checked="(bool) old('is_free_preview', $lesson->is_free_preview)" />
+        </x-card>
+
+        <div class="flex items-center gap-3">
+            <x-btn>Simpan</x-btn>
+            <x-btn :href="route('mentor.courses.show', $module->course)" variant="secondary">Batal</x-btn>
         </div>
-    </div>
-</x-app-layout>
+    </form>
+</x-panel-layout>
