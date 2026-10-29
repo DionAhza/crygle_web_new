@@ -22,10 +22,10 @@
         <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-12">
             {{-- Kolom kiri --}}
             <div>
-                <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+                <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                     IT &amp; Creative Bootcamp for Kids
                 </span>
-                <h1 class="mt-4 text-3xl font-extrabold leading-tight text-blue-800 sm:text-4xl lg:text-5xl">
+                <h1 class="mt-4 text-3xl font-extrabold leading-tight text-brand sm:text-4xl lg:text-5xl">
                     Bangun Skill Digital Anak Sejak Dini, Bukan Sekadar Screen Time.
                 </h1>
             </div>
@@ -39,7 +39,7 @@
                 </p>
                 <a href="https://wa.me/62XXXXXXXXXXX?text=Halo%20Crygle%20Academy,%20saya%20ingin%20konsultasi%20program%20untuk%20anak"
                    target="_blank" rel="noopener"
-                   class="mt-5 inline-flex items-center gap-2 rounded-full bg-blue-800 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-900">
+                   class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.8h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88zM20.52 3.45A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/>
                     </svg>
@@ -49,13 +49,13 @@
         </div>
 
         {{-- Gambar / video --}}
-        <div class="relative mt-8 overflow-hidden rounded-3xl bg-slate-200 shadow-lg shadow-blue-900/5 lg:mt-10">
+        <div class="relative mt-8 overflow-hidden rounded-3xl bg-slate-200 shadow-lg shadow-brand-dark/5 lg:mt-10">
             <img src="{{ asset('images/hero-crygle.jpg') }}"
                  alt="Siswa belajar bersama mentor di Crygle Academy"
                  class="aspect-[4/3] w-full object-cover sm:aspect-video">
 
             <a href="#video" aria-label="Putar video profil Crygle Academy"
-               class="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue-800 text-white shadow-xl ring-4 ring-white/60 transition hover:scale-105 hover:bg-blue-900 sm:h-20 sm:w-20">
+               class="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-white shadow-xl ring-4 ring-white/60 transition hover:scale-105 hover:bg-brand-dark sm:h-20 sm:w-20">
                 <svg class="ml-1 h-7 w-7 sm:h-8 sm:w-8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M8 5v14l11-7z" />
                 </svg>
@@ -65,7 +65,7 @@
         {{-- Statistik singkat --}}
         <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-4">
             <div class="flex items-center gap-3">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-800">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-brand">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19a4 4 0 0 0-8 0M11 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 8a4 4 0 0 0-3-3.87M16 5.13a3 3 0 0 1 0 5.74" />
                     </svg>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-800">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-brand">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" />
                     </svg>
@@ -89,7 +89,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-800">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-brand">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.25v13m0-13C10.83 5.48 9.25 5 7.5 5S4.17 5.48 3 6.25v13C4.17 18.48 5.75 18 7.5 18s3.33.48 4.5 1.25m0-13C13.17 5.48 14.75 5 16.5 5c1.75 0 3.33.48 4.5 1.25v13C19.83 18.48 18.25 18 16.5 18c-1.75 0-3.33.48-4.5 1.25" />
                     </svg>
@@ -101,7 +101,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-800">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-brand">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5a.56.56 0 0 1 1.04 0l2.13 5.11a.56.56 0 0 0 .48.35l5.52.44c.5.04.7.66.32.99l-4.2 3.6a.56.56 0 0 0-.18.56l1.28 5.39a.56.56 0 0 1-.84.61l-4.73-2.89a.56.56 0 0 0-.58 0l-4.73 2.89a.56.56 0 0 1-.84-.61l1.28-5.39a.56.56 0 0 0-.18-.56l-4.2-3.6a.56.56 0 0 1 .32-.99l5.52-.44a.56.56 0 0 0 .48-.35l2.13-5.11z" />
                     </svg>
@@ -120,22 +120,22 @@
 
             {{-- Kolom kiri --}}
             <div>
-                <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+                <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                     Masalah Orang Tua
                 </span>
-                <h2 class="mt-4 text-2xl font-extrabold leading-tight text-blue-800 sm:text-3xl lg:text-4xl">
+                <h2 class="mt-4 text-2xl font-extrabold leading-tight text-brand sm:text-3xl lg:text-4xl">
                     Anak Sudah Dekat dengan Teknologi. Sekarang Saatnya Belajar Menciptakan dengan Teknologi.
                 </h2>
                 <p class="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
                     Orang tua mungkin melihat anak semakin dekat dengan gadget, game, internet, dan teknologi.
                 </p>
 
-                <blockquote class="mt-5 rounded-r-xl border-l-4 border-blue-800 bg-white px-4 py-3 text-sm font-medium leading-relaxed text-slate-700 shadow-sm">
+                <blockquote class="mt-5 rounded-r-xl border-l-4 border-brand bg-white px-4 py-3 text-sm font-medium leading-relaxed text-slate-700 shadow-sm">
                     Apakah screen time anak hanya menjadi konsumsi, atau bisa berubah menjadi kemampuan yang menghasilkan karya?
                 </blockquote>
 
                 <a href="#program"
-                   class="mt-6 inline-flex items-center rounded-full bg-blue-800 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-900">
+                   class="mt-6 inline-flex items-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark">
                     Cari Jalur Belajar Anak
                 </a>
             </div>
@@ -143,7 +143,7 @@
             {{-- Kolom kanan: 3 kartu masalah --}}
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div class="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm sm:col-span-2">
-                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-blue-800">01</span>
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-brand">01</span>
                     <h3 class="mt-3 text-sm font-bold text-slate-800">Screen Time Tanpa Arah</h3>
                     <p class="mt-1 text-xs leading-relaxed text-slate-500">
                         Anak menghabiskan banyak waktu dengan gadget, tetapi belum diarahkan untuk membuat sesuatu yang produktif.
@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
-                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-blue-800">02</span>
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-brand">02</span>
                     <h3 class="mt-3 text-sm font-bold text-slate-800">Belajar IT di Sekolah Belum Cukup</h3>
                     <p class="mt-1 text-xs leading-relaxed text-slate-500">
                         Anak membutuhkan pengalaman praktik dan proyek untuk mengembangkan skill digital secara bertahap.
@@ -159,7 +159,7 @@
                 </div>
 
                 <div class="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
-                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-blue-800">03</span>
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-[11px] font-bold text-brand">03</span>
                     <h3 class="mt-3 text-sm font-bold text-slate-800">Orang Tua Bingung Mulai dari Mana</h3>
                     <p class="mt-1 text-xs leading-relaxed text-slate-500">
                         Coding, design, robotika, UI/UX dan lain-lain. Pilih yang mana dan mulai dari mana?
@@ -191,10 +191,10 @@
 
             {{-- Kolom kiri --}}
             <div>
-                <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+                <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                     Apa yang membuat Crygle berbeda
                 </span>
-                <h2 class="mt-4 text-2xl font-extrabold leading-tight text-blue-800 sm:text-3xl lg:text-4xl">
+                <h2 class="mt-4 text-2xl font-extrabold leading-tight text-brand sm:text-3xl lg:text-4xl">
                     Bukan Sekadar Belajar. Anak Dibimbing Sampai Menghasilkan Karya.
                 </h2>
                 <p class="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -209,7 +209,7 @@
                 <ol class="grid grid-cols-2 gap-y-5 sm:grid-cols-4">
                     @foreach ($alur as $i => $step)
                         <li class="relative flex flex-col items-center text-center">
-                            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 text-blue-800 ring-4 ring-white">
+                            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 text-brand ring-4 ring-white">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="{{ $step[2] }}" />
                                 </svg>
@@ -219,7 +219,7 @@
 
                             {{-- Panah antar langkah (desktop saja) --}}
                             @if (! $loop->last)
-                                <span class="absolute -right-2 top-3 hidden text-blue-800 sm:block" aria-hidden="true">&rarr;</span>
+                                <span class="absolute -right-2 top-3 hidden text-brand sm:block" aria-hidden="true">&rarr;</span>
                             @endif
                         </li>
                     @endforeach
@@ -229,7 +229,7 @@
                 <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     @foreach ($keunggulan as $item)
                         <div class="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
-                            <h3 class="text-sm font-bold text-blue-800">{{ $item[0] }}</h3>
+                            <h3 class="text-sm font-bold text-brand">{{ $item[0] }}</h3>
                             <p class="mt-1 text-xs leading-relaxed text-slate-500">{{ $item[1] }}</p>
                         </div>
                     @endforeach
@@ -276,10 +276,10 @@
 
             {{-- Heading --}}
             <div class="text-center">
-                <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+                <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                     Jalur Belajar Berdasarkan Usia
                 </span>
-                <h2 class="mt-4 text-2xl font-extrabold text-blue-800 sm:text-3xl lg:text-4xl">
+                <h2 class="mt-4 text-2xl font-extrabold text-brand sm:text-3xl lg:text-4xl">
                     Setiap Anak Punya Starting Point yang Berbeda
                 </h2>
                 <p class="mt-3 text-sm text-slate-600 sm:text-base">
@@ -290,9 +290,9 @@
             {{-- Kartu jalur --}}
             <div class="mt-10 grid grid-cols-1 items-stretch gap-5 md:grid-cols-3">
                 @foreach ($jalur as $j)
-                    <div class="flex flex-col rounded-2xl p-6 {{ $j['unggulan'] ? 'bg-blue-800 text-white shadow-xl shadow-blue-900/20 md:-my-3 md:py-9' : 'border border-blue-100 bg-blue-50/50' }}">
+                    <div class="flex flex-col rounded-2xl p-6 {{ $j['unggulan'] ? 'bg-brand text-white shadow-xl shadow-brand-dark/20 md:-my-3 md:py-9' : 'border border-blue-100 bg-blue-50/50' }}">
 
-                        <span class="inline-flex w-fit items-center rounded-full px-3 py-1 text-[11px] font-bold {{ $j['unggulan'] ? 'bg-white text-blue-800' : 'bg-amber-400 text-blue-900' }}">
+                        <span class="inline-flex w-fit items-center rounded-full px-3 py-1 text-[11px] font-bold {{ $j['unggulan'] ? 'bg-white text-brand' : 'bg-amber-400 text-blue-900' }}">
                             {{ $j['badge'] }}
                         </span>
 
@@ -311,7 +311,7 @@
                         </ul>
 
                         <a href="{{ $j['href'] }}"
-                           class="mt-6 inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-xs font-semibold transition {{ $j['unggulan'] ? 'border-white bg-white text-blue-800 hover:bg-blue-50' : 'border-blue-800 bg-white text-blue-800 hover:bg-blue-800 hover:text-white' }}">
+                           class="mt-6 inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-xs font-semibold transition {{ $j['unggulan'] ? 'border-white bg-white text-brand hover:bg-blue-50' : 'border-brand bg-white text-brand hover:bg-brand hover:text-white' }}">
                             {{ $j['cta'] }}
                             <span aria-hidden="true">&rarr;</span>
                         </a>
@@ -342,10 +342,10 @@
     @endphp
 
     <section id="pilar" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 lg:py-16">
-        <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+        <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
             3 Pilar Crygle Academy
         </span>
-        <h2 class="mt-4 max-w-3xl text-2xl font-extrabold leading-tight text-blue-800 sm:text-3xl lg:text-4xl">
+        <h2 class="mt-4 max-w-3xl text-2xl font-extrabold leading-tight text-brand sm:text-3xl lg:text-4xl">
             Anak Bisa Memilih Dunia Digital yang Paling Sesuai dengan Minatnya
         </h2>
 
@@ -355,23 +355,23 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="col-span-2 overflow-hidden rounded-2xl bg-blue-100">
                     <img src="{{ asset('images/landing_page/pillar-1.png') }}" alt="Creative Design"
-                         class="aspect-[16/10] w-full object-cover">
+                         class="aspect-[619/330] w-full object-cover">
                 </div>
                 <div class="overflow-hidden rounded-2xl bg-blue-100">
                     <img src="{{ asset('images/landing_page/pillar-2.png') }}" alt="Creative Robotics"
-                         class="aspect-square w-full object-cover">
+                         class="aspect-[295/335] w-full object-cover">
                 </div>
                 <div class="overflow-hidden rounded-2xl bg-blue-100">
                     <img src="{{ asset('images/landing_page/pillar-3.png') }}" alt="Creative Coding"
-                         class="aspect-square w-full object-cover">
+                         class="aspect-[295/335] w-full object-cover">
                 </div>
             </div>
 
             {{-- Kolom kanan: 3 kartu --}}
             <div class="flex flex-col gap-4">
                 @foreach ($pilar as $p)
-                    <div class="rounded-2xl border p-5 {{ $loop->first ? 'border-blue-800 bg-blue-800 text-white shadow-lg shadow-blue-900/20' : 'border-blue-100 bg-white text-slate-700' }}">
-                        <svg class="h-6 w-6 {{ $loop->first ? 'text-white' : 'text-blue-800' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <div class="rounded-2xl border p-5 {{ $loop->first ? 'border-brand bg-brand text-white shadow-lg shadow-brand-dark/20' : 'border-blue-100 bg-white text-slate-700' }}">
+                        <svg class="h-6 w-6 {{ $loop->first ? 'text-white' : 'text-brand' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $p['icon'] }}" />
                         </svg>
                         <h3 class="mt-3 text-sm font-bold {{ $loop->first ? 'text-white' : 'text-slate-800' }}">{{ $p['judul'] }}</h3>
@@ -391,14 +391,14 @@
         ];
     @endphp
 
-    <section id="karya" class="relative scroll-mt-20 overflow-hidden bg-blue-800 py-12 lg:py-16">
+    <section id="karya" class="relative scroll-mt-20 overflow-hidden bg-brand py-12 lg:py-16">
         {{-- Dekorasi --}}
         <div class="pointer-events-none absolute -left-24 top-1/2 h-96 w-96 rounded-full bg-white/5" aria-hidden="true"></div>
         <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-white/5" aria-hidden="true"></div>
 
         <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
             <div class="text-center">
-                <span class="inline-block rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+                <span class="inline-block rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                     Karya Siswa
                 </span>
                 <h2 class="mt-4 text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl">
@@ -417,7 +417,7 @@
                             <div class="p-5">
                                 <h3 class="text-sm font-bold text-slate-800">{{ $k['nama'] }}</h3>
                                 <p class="mt-2 text-xs text-slate-500">
-                                    {{ $k['bidang'] }} &bull; Siswa <span class="font-semibold text-blue-700">{{ $k['sekolah'] }}</span>
+                                    {{ $k['bidang'] }} &bull; Siswa <span class="font-semibold text-brand">{{ $k['sekolah'] }}</span>
                                 </p>
                             </div>
                         </article>
@@ -427,11 +427,11 @@
                 {{-- Kontrol --}}
                 <div data-controls class="mt-6 flex items-center justify-center gap-3">
                     <button type="button" data-prev aria-label="Sebelumnya"
-                            class="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 text-white transition hover:bg-white hover:text-blue-800">&lsaquo;</button>
+                            class="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 text-white transition hover:bg-white hover:text-brand">&lsaquo;</button>
                     <div data-dots class="flex items-center gap-1.5"
                          data-dot-active="bg-white w-2 h-2" data-dot-idle="bg-white/40 w-1.5 h-1.5"></div>
                     <button type="button" data-next aria-label="Berikutnya"
-                            class="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 text-white transition hover:bg-white hover:text-blue-800">&rsaquo;</button>
+                            class="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 text-white transition hover:bg-white hover:text-brand">&rsaquo;</button>
                 </div>
             </div>
         </div>
@@ -452,7 +452,7 @@
     <section id="video" class="scroll-mt-20 bg-white py-12 lg:py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6">
             <div class="text-center">
-                <h2 class="text-2xl font-extrabold text-blue-800 sm:text-3xl lg:text-4xl">Apa Kata Mereka</h2>
+                <h2 class="text-2xl font-extrabold text-brand sm:text-3xl lg:text-4xl">Apa Kata Mereka</h2>
                 <p class="mt-3 text-sm text-slate-600 sm:text-base">
                     Dari nggak tahu apa-apa, sekarang bisa bikin karya sendiri.
                 </p>
@@ -466,7 +466,7 @@
                              class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></span>
 
-                        <span class="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue-800 text-white shadow-lg ring-4 ring-white/50 transition group-hover:scale-110">
+                        <span class="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-white shadow-lg ring-4 ring-white/50 transition group-hover:scale-110">
                             <svg class="ml-0.5 h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
                         </span>
 
@@ -497,21 +497,15 @@
             ['inisial' => 'AF', 'nama' => 'Anto Firmasyah', 'peran' => 'Orang Tua Anto Sumanta',
              'teks' => 'Awalnya aku nggak ngerti coding sama sekali. Setelah belajar step by step, sekarang aku sudah bisa membuat project sendiri.',
              'program' => 'Web Development', 'durasi' => '3 Bulan'],
-
-            // TODO: ganti dua item di bawah dengan testimoni asli
-            ['inisial' => '??', 'nama' => 'Nama Orang Tua', 'peran' => 'Orang Tua Siswa',
-             'teks' => 'Isi testimoni asli di sini.', 'program' => 'Program', 'durasi' => '- Bulan'],
-            ['inisial' => '??', 'nama' => 'Nama Orang Tua', 'peran' => 'Orang Tua Siswa',
-             'teks' => 'Isi testimoni asli di sini.', 'program' => 'Program', 'durasi' => '- Bulan'],
         ];
     @endphp
 
     <section id="testimoni" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 lg:py-16">
         <div class="text-center">
-            <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+            <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                 Testimoni
             </span>
-            <h2 class="mt-4 text-2xl font-extrabold text-blue-800 sm:text-3xl lg:text-4xl">
+            <h2 class="mt-4 text-2xl font-extrabold text-brand sm:text-3xl lg:text-4xl">
                 Bukan Hanya Anak yang Merasakan Perubahannya
             </h2>
             <p class="mt-3 text-sm text-slate-600 sm:text-base">
@@ -526,23 +520,23 @@
                         <div class="flex items-center gap-3">
                             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-slate-800">{{ $t['inisial'] }}</span>
                             <div>
-                                <p class="text-sm font-bold text-blue-800">{{ $t['nama'] }}</p>
+                                <p class="text-sm font-bold text-brand">{{ $t['nama'] }}</p>
                                 <p class="text-[11px] text-slate-500">{{ $t['peran'] }}</p>
                             </div>
                         </div>
                         <p class="mt-5 flex-1 text-xs leading-relaxed text-slate-600">&ldquo;{{ $t['teks'] }}&rdquo;</p>
-                        <p class="mt-5 text-[11px] text-blue-700">{{ $t['program'] }} &bull; {{ $t['durasi'] }}</p>
+                        <p class="mt-5 text-[11px] text-brand">{{ $t['program'] }} &bull; {{ $t['durasi'] }}</p>
                     </article>
                 @endforeach
             </div>
 
             <div data-controls class="mt-8 flex items-center justify-center gap-3">
                 <button type="button" data-prev aria-label="Sebelumnya"
-                        class="flex h-8 w-8 items-center justify-center rounded-full border border-blue-800 text-blue-800 transition hover:bg-blue-800 hover:text-white">&lsaquo;</button>
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-brand text-brand transition hover:bg-brand hover:text-white">&lsaquo;</button>
                 <div data-dots class="flex items-center gap-1.5"
-                     data-dot-active="bg-blue-800 w-2 h-2" data-dot-idle="bg-blue-200 w-1.5 h-1.5"></div>
+                     data-dot-active="bg-brand w-2 h-2" data-dot-idle="bg-blue-200 w-1.5 h-1.5"></div>
                 <button type="button" data-next aria-label="Berikutnya"
-                        class="flex h-8 w-8 items-center justify-center rounded-full border border-blue-800 text-blue-800 transition hover:bg-blue-800 hover:text-white">&rsaquo;</button>
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-brand text-brand transition hover:bg-brand hover:text-white">&rsaquo;</button>
             </div>
         </div>
     </section>
@@ -575,10 +569,10 @@
 
     <section id="faq" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 lg:py-16">
         <div class="text-center">
-            <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-blue-700">
+            <span class="inline-block rounded-full bg-brand-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
                 Parent FAQ
             </span>
-            <h2 class="mt-4 text-2xl font-extrabold text-blue-800 sm:text-3xl lg:text-4xl">
+            <h2 class="mt-4 text-2xl font-extrabold text-brand sm:text-3xl lg:text-4xl">
                 Pertanyaan yang Sering Ditanyakan Orang Tua
             </h2>
             <p class="mt-3 text-sm text-slate-600 sm:text-base">
@@ -593,7 +587,7 @@
                         <details class="group rounded-2xl border border-blue-100 bg-white px-5 py-4 shadow-sm transition open:border-blue-600" @if ($loop->first) open @endif>
                             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-slate-800 [&::-webkit-details-marker]:hidden">
                                 <span>{{ $item['q'] }}</span>
-                                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm text-blue-800" aria-hidden="true">
+                                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm text-brand" aria-hidden="true">
                                     <span class="group-open:hidden">+</span>
                                     <span class="hidden group-open:inline">&times;</span>
                                 </span>
@@ -610,18 +604,11 @@
     <section id="kontak" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 lg:py-16">
         <div class="relative overflow-hidden rounded-3xl border border-blue-200 bg-gradient-to-b from-blue-50 to-blue-100 px-6 py-14 text-center sm:px-10 lg:py-16">
 
-            {{-- Dekorasi blok kotak (kiri) --}}
-            <div class="pointer-events-none absolute -left-4 bottom-0 hidden h-40 w-44 md:block" aria-hidden="true">
-                <div class="absolute left-10 top-0 h-14 w-14 bg-blue-200/70"></div>
-                <div class="absolute left-0 top-14 h-14 w-28 bg-blue-200/70"></div>
-                <div class="absolute left-10 top-28 h-14 w-14 bg-blue-200/70"></div>
-            </div>
-
             {{-- Ilustrasi opsional: letakkan di public/images/landing_page/ --}}
             <img src="{{ asset('images/landing_page/cta-left.png') }}" alt=""
-                 class="pointer-events-none absolute left-4 top-4 hidden w-40 md:block lg:w-48" aria-hidden="true">
+                 class="pointer-events-none absolute bottom-0 left-0 hidden h-full w-auto md:block" aria-hidden="true">
             <img src="{{ asset('images/landing_page/cta-right.png') }}" alt=""
-                 class="pointer-events-none absolute bottom-3 right-4 hidden w-44 md:block lg:w-56" aria-hidden="true">
+                 class="pointer-events-none absolute bottom-0 right-0 hidden h-full w-auto md:block" aria-hidden="true">
 
             <div class="relative mx-auto max-w-xl">
                 <h2 class="text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl lg:text-4xl">
@@ -632,7 +619,7 @@
                 </p>
                 <a href="https://wa.me/62XXXXXXXXXXX?text=Halo%20Crygle%20Academy,%20saya%20ingin%20konsultasi%20program%20untuk%20anak"
                    target="_blank" rel="noopener"
-                   class="mt-7 inline-flex items-center gap-2 rounded-full bg-blue-800 px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-blue-900">
+                   class="mt-7 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-brand-dark">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.8h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88zM20.52 3.45A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/>
                     </svg>
@@ -642,72 +629,7 @@
         </div>
     </section>
 
-    {{-- ============================== FOOTER ============================== --}}
-    @php
-        $footerNav = [
-            'Navigasi' => [
-                ['Home', '#beranda'], ['E-Learning', '#'], ['Courses & Classes', '#program'],
-                ['Mentor', '#keunggulan'], ['Testimoni', '#testimoni'],
-            ],
-            'Program' => [
-                ['Creative Design', '#pilar'], ['Creative Coding', '#pilar'], ['Creative Robotics', '#pilar'],
-                ['Consulting', '#kontak'], ['Karir', '#'],
-            ],
-            'Dukungan' => [
-                ['Pusat Bantuan', '#faq'], ['Kontak Kami', '#kontak'], ['Kebijakan Privasi', '#'],
-                ['Syarat & Ketentuan', '#'], ['FAQ', '#faq'],
-            ],
-        ];
-    @endphp
-
-    <footer class="bg-blue-800 text-white">
-        <div class="mx-auto max-w-6xl px-4 pb-6 pt-12 sm:px-6">
-            <div class="grid grid-cols-2 gap-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-
-                {{-- Brand --}}
-                <div class="col-span-2 lg:col-span-1">
-                    <a href="#beranda" class="inline-flex items-center gap-2">
-                        <img src="{{ asset('images/footer.svg') }}" alt="">
-                    </a>
-                    <p class="mt-5 max-w-xs text-sm leading-relaxed text-blue-100">
-                        Belajar kreatif digital dari nol untuk masa depan yang lebih siap.
-                    </p>
-
-                    <ul class="mt-6 space-y-3 text-xs text-blue-50">
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 shrink-0 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                            </svg>
-                            <a href="mailto:tanya@crygleacademy.com" class="hover:underline">tanya@crygleacademy.com</a>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="mt-0.5 h-5 w-5 shrink-0 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z" />
-                            </svg>
-                            <span class="leading-relaxed">Jl. Cipta Karya, Sidomulyo Bar., Kec. Tampan, Kota Pekanbaru, Riau 28293</span>
-                        </li>
-                    </ul>
-                </div>
-
-                {{-- Kolom link --}}
-                @foreach ($footerNav as $judul => $links)
-                    <div>
-                        <h3 class="text-sm font-bold uppercase tracking-wide">{{ $judul }}</h3>
-                        <ul class="mt-4 space-y-3 text-xs text-blue-100">
-                            @foreach ($links as [$label, $href])
-                                <li><a href="{{ $href }}" class="transition hover:text-white hover:underline">{{ $label }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="mt-10 border-t border-white/25 pt-5 text-center text-xs text-blue-100">
-                &copy; {{ date('Y') }} CRYGLE Academy. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <x-site-footer />
 
     {{-- ============================== SCRIPT: CAROUSEL + MODAL VIDEO ============================== --}}
     <script>

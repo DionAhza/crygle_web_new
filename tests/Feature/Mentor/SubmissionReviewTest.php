@@ -221,6 +221,6 @@ class SubmissionReviewTest extends TestCase
     public function test_dashboard_pending_card_links_to_review_queue(): void
     {
         $this->actingAs($this->mentor)->get(route('mentor.dashboard'))
-            ->assertOk()->assertSee('Tugas Menunggu Review')->assertSee(route('mentor.submissions.index'), false);
+            ->assertOk()->assertSee('Menunggu Review')->assertSee(route('mentor.submissions.index'), false);
     }
 }
